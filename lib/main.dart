@@ -8,7 +8,7 @@ void main() {
   runApp(
     GetMaterialApp(
       initialRoute: '/splash',
-      locale: Locale('pt', 'BR'),
+      locale: const Locale('pt', 'BR'),
       getPages: [
         GetPage(
           name: '/splash',
@@ -21,9 +21,8 @@ void main() {
         ),
       ],
       theme: ThemeData(
-        fontFamily: 'FredokaOne',
-        primaryColor: const Color(0xff48c2e7),
-        primarySwatch: Colors.blue[200]
+        fontFamily: 'Nunito',
+        primaryColor: const Color.fromARGB(255, 25, 108, 161),
       ),
     ),
   );

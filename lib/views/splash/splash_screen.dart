@@ -19,9 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              const Color(0xff48c2e7),
-              const Color(0xff196ca1),
+            colors: const [
+              Color(0xff48c2e7),
+              Color(0xff196ca1),
             ]
           ),
         ),
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 4)).then((value){
+    Future.delayed(const Duration(seconds: 4)).then((value){
       Get.offNamed('/login');
     });
   }
