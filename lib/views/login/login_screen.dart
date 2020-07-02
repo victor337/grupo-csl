@@ -139,13 +139,22 @@ class LoginScreen extends StatelessWidget {
                             userController.login(
                               teste: (){
                                 Get.toNamed('/base');
+                                Get.snackbar(
+                                  'Sucesso',
+                                  'Logado com sucesso',
+                                  backgroundColor: const Color(0xff48c2e7),
+                                  colorText: Colors.white
+                                );
                               }
                             );
                           } : null,
                           child: userController.isLoading ?
-                          const Center(
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation(Colors.white),
+                              ),
                             ),
                           ) :  Container(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10) ,
