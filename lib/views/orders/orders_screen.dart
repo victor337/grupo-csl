@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:grupocsl/common/drawer/custom_drawer.dart';
 import 'package:grupocsl/constants/size_screen.dart';
 import 'package:grupocsl/controllers/orders/orders_controller.dart';
+import 'package:grupocsl/model/adress/adress_model.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
 import 'package:grupocsl/views/orders/components/order_option.dart';
+import 'package:grupocsl/views/orders/details/details_order_screen.dart';
 
 
 class OrdersScreen extends StatefulWidget {
@@ -23,6 +25,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
       client: 'Victor',
       date: '2/7/2020',
       status: 0,
+      type: 'À vista',
+      tel: '1120154933',
+      paid: false,
+      adress: Adress(street: 'Rua Fulano', number: 152, neighborhood: 'Colonial', city: 'SÃO PAULO', state: 'SP'),
+      phone: '11977261437',
+      observation: 'São coisas e pá',
     ),
     OrderService(
       number: '22',
@@ -30,6 +38,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
       client: 'Alana',
       date: '3/7/2020',
       status: 2,
+      type: 'À vista',
+      tel: '1120154933',
+      paid: false,
+      adress: Adress(street: 'Rua Fulano', number: 152, neighborhood: 'Colonial', city: 'SÃO PAULO', state: 'SP'),
+      phone: '11977261437',
+      observation: 'São coisas e pá',
     ),
     OrderService(
       number: '40',
@@ -37,6 +51,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
       client: 'João',
       date: '2/7/2020',
       status: 1,
+      type: 'À vista',
+      tel: '1120154933',
+      paid: false,
+      adress: Adress(street: 'Rua Fulano', number: 152, neighborhood: 'Colonial', city: 'SÃO PAULO', state: 'SP'),
+      phone: '11977261437',
+      observation: 'São coisas e pá',
     ),
   ];
 
@@ -93,7 +113,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             onPressed: (){
                               showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
+                                initialDate: ordersController.dateNotFormated,
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(DateTime.now().year, DateTime.now().month,
                                   DateTime.now().day + 1)
@@ -101,9 +121,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 if(date == null){
                                   return;
                                 } else{
-                                  final String dateFormated =
-                                    '${date.day}/${date.month}/${date.year}';
-                                  ordersController.setDate(dateFormated);
+                                  ordersController.setDate(date);
                                 }
                               });
                             },
@@ -120,8 +138,15 @@ class _OrdersScreenState extends State<OrdersScreen> {
               builder: (ordersController){
                 return Expanded(
                   child: ListView(
-                    children: orders.where((element) => element.date == 
-                    ordersController.date).map((e) => OrderOption(e)).toList(),
+                    children: orders.where(
+                      (element) => element.date == ordersController.date).map(
+                        (e) => GestureDetector(
+                          onTap: (){
+                            Get.to(DetailOrderScreen(e));
+                          },
+                          child: OrderOption(e)
+                      )
+                    ).toList(),
                   ),
                 );
               },
