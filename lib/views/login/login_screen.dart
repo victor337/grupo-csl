@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -143,7 +143,10 @@ class LoginScreen extends StatelessWidget {
                                   'Sucesso',
                                   'Logado com sucesso',
                                   backgroundColor: const Color(0xff48c2e7),
-                                  colorText: Colors.white
+                                  colorText: Colors.white,
+                                  duration: const Duration(
+                                    seconds: 2
+                                  )
                                 );
                               }
                             );

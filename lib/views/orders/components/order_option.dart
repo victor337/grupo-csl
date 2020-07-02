@@ -21,27 +21,40 @@ class OrderOption extends StatelessWidget {
     }
 
     return Container(
-      color: Colors.white,
+      margin: const EdgeInsets.only(top: 10),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.circular(8)
+      ),
       child: ListTile(
         title: Row(
           children: <Widget>[
             Text(
               'OS ${orderService.number}',
               style: TextStyle(
-                color: Theme.of(context).primaryColor,
+                color: Colors.white,
+                fontWeight: FontWeight.bold
               ),
             ),
-            const Text(' - '),
+            const Text(
+              ' - ',
+              style: TextStyle(
+                color: Colors.white
+              ),
+            ),
             Text(
               orderService.hour,
-              style: TextStyle(
-                color: Colors.black
+              style: const TextStyle(
+                color: Colors.white
               ),
             ),
           ],
         ),
         subtitle: Text(
           orderService.client,
+          style: TextStyle(
+            color: Colors.black
+          ),
         ),
         trailing: Container(
           height: 30,
