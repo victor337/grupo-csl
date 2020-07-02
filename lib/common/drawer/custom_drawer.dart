@@ -1,32 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:grupocsl/common/drawer/components/drawer_option.dart';
 import 'package:grupocsl/constants/size_screen.dart';
-import 'package:grupocsl/model/order_service/order_service.dart';
+import 'package:grupocsl/model/order_service/drawer/drawer_option_model.dart';
+
 
 
 class CustomDrawer extends StatelessWidget {
 
   final SizeScreen sizeScreen = SizeScreen();
 
-  final List<OrderService> orders = [
-    OrderService(
-      number: '22',
-      hour: '08:00',
-      client: 'Victor Hugo',
-      status: 0
-    ),
-    OrderService(
-      number: '27',
-      hour: '10:00',
-      client: 'Alana',
-      status: 1
-    ),
-    OrderService(
-      number: '25',
-      hour: '12:00',
-      client: 'João',
-      status: 2
-    ),
+  final List<DrawerOptionModel> orders = [
+    DrawerOptionModel('Listar OS', 0),
+    DrawerOptionModel('Perfil', 1),
   ];
 
   @override
@@ -64,7 +50,6 @@ class CustomDrawer extends StatelessWidget {
             Expanded(
               child: Container(
                 color: const Color.fromARGB(255, 11, 48, 71),
-                padding: const EdgeInsets.only(top: 8),
                 child: ListView(
                   children: orders.map((order){
                     return Column(
@@ -77,6 +62,31 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
             ),
+            GestureDetector(
+              onTap: (){
+                Get.offAllNamed('/login');
+              },
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(10, 20, 0, 25),
+                color: const Color.fromARGB(255, 11, 48, 71),
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.exit_to_app,
+                      color: Colors.white
+                    ),
+                    const SizedBox(width: 8),
+                    const Text(
+                      'Sair',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

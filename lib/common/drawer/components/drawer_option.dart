@@ -1,57 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:grupocsl/model/order_service/order_service.dart';
+import 'package:get/get.dart';
+import 'package:grupocsl/controllers/base/base_controller.dart';
+import 'package:grupocsl/model/order_service/drawer/drawer_option_model.dart';
 
 
 class DrawerOption extends StatelessWidget {
 
-  final OrderService orderService;
-  const DrawerOption(this.orderService);
+  final DrawerOptionModel drawerOptionModel;
+  const DrawerOption(this.drawerOptionModel);
 
   @override
   Widget build(BuildContext context) {
-
-    Color setColor(int status){
-      if(status == 0) {
-        return Colors.green;
-      } else if(status == 1){
-        return Colors.yellow;
-      } else{
-        return Colors.red;
-      }
-    }
-
-    return Container(
-      color: Colors.white,
-      child: ListTile(
-        title: Row(
-          children: <Widget>[
-            Text(
-              'OS ${orderService.number}',
+    return GetBuilder<BaseController>(
+      init: BaseController(),
+      builder: (baseController){
+        return Container(
+          color: baseController.page == drawerOptionModel.page ?
+          const Color.fromARGB(150, 255, 255, 255) : Colors.transparent,
+          child: ListTile(
+            onTap: (){
+              baseController.setPage(drawerOptionModel.page);
+            },
+            title: Text(
+              drawerOptionModel.title,
               style: TextStyle(
-                color: Theme.of(context).primaryColor,
+                color:  baseController.page == drawerOptionModel.page ?
+                Theme.of(context).primaryColor : Colors.white
               ),
             ),
-            const Text(' - '),
-            Text(
-              orderService.hour,
-              style: TextStyle(
-                color: Colors.black
-              ),
-            ),
-          ],
-        ),
-        subtitle: Text(
-          orderService.client,
-        ),
-        trailing: Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: setColor(orderService.status)
+            trailing: Icon(
+              Icons.arrow_right,
+              color: Colors.white,
+            )
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -15,26 +15,28 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: sizeScreen.getHeightScreen(context),
-        width: sizeScreen.getWidthScreen(context),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: const [
-              Color(0xff48c2e7),
-              Color(0xff196ca1),
-            ]
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          height: sizeScreen.getHeightScreen(context),
+          width: sizeScreen.getWidthScreen(context),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: const [
+                Color(0xff48c2e7),
+                Color(0xff196ca1),
+              ]
+            ),
           ),
-        ),
-        child: Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height / 3,
-            child: FadeInImage.memoryNetwork(
-              placeholder: kTransparentImage,
-              image: 'http://www.carroesofalimpo.com.br/img/logo.png'
+          child: Center(
+            child: Container(
+              height: MediaQuery.of(context).size.height / 3,
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: 'http://www.carroesofalimpo.com.br/img/logo.png'
+              ),
             ),
           ),
         ),
