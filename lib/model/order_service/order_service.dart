@@ -7,12 +7,14 @@ class OrderService {
   String hour;
   String client;
   int status;
+  String date;
 
   OrderService({
     @required this.number,
     @required this.hour,
     @required this.client,
-    @required this.status
+    @required this.status,
+    @required this.date
   });
 
 }
