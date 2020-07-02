@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grupocsl/constants/size_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 
@@ -9,12 +10,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  final SizeScreen sizeScreen = SizeScreen();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        height: sizeScreen.getHeightScreen(context),
+        width: sizeScreen.getWidthScreen(context),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

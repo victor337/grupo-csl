@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grupocsl/constants/size_screen.dart';
 import 'package:grupocsl/controllers/login/login_controller.dart';
 import 'package:grupocsl/controllers/user/user_controller.dart';
 import 'package:grupocsl/views/login/components/custom_form_field.dart';
@@ -11,6 +12,8 @@ class LoginScreen extends StatelessWidget {
 
   final FocusNode focusLogin = FocusNode();
   final FocusNode focusPass = FocusNode();
+
+  final SizeScreen sizeScreen = SizeScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +36,8 @@ class LoginScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(20),
-          height: MediaQuery.of(context).size.height -
-           AppBar().preferredSize.height - MediaQuery.of(context).padding.top,
-          width:  MediaQuery.of(context).size.width,
+          height: sizeScreen.getHeightScreenWidthAppBar(context, AppBar()),
+          width:  sizeScreen.getWidthScreen(context),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -51,7 +53,7 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height / 6,
+                height: sizeScreen.getHeightScreen(context) / 6,
                 child: FadeInImage.memoryNetwork(
                   placeholder: kTransparentImage,
                   image: 'http://www.carroesofalimpo.com.br/img/logo.png',
@@ -129,12 +131,16 @@ class LoginScreen extends StatelessWidget {
                     init: UserController(),
                     builder: (userController){
                       return Container(
-                        width: MediaQuery.of(context).size.width,
+                        width: sizeScreen.getWidthScreen(context),
                         child: RaisedButton(
                           color: Theme.of(context).primaryColor,
                           disabledColor: Colors.grey,
                           onPressed: loginController.isValid ?(){
-
+                            userController.login(
+                              teste: (){
+                                Get.toNamed('/base');
+                              }
+                            );
                           } : null,
                           child: userController.isLoading ?
                           const Center(

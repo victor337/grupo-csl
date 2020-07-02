@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
@@ -6,7 +7,7 @@ class UserController extends GetxController {
   bool isLoading = false;
 
   //Função para iniciar sessão
-  Future<void> login()async{
+  Future<void> login({@required Function teste})async{
 
     isLoading = true;
     update();
@@ -14,6 +15,7 @@ class UserController extends GetxController {
     await Future.delayed(const Duration(seconds: 3));
 
     isLoading = false;
+    teste();
     update();
 
   }
