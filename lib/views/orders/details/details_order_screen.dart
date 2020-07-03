@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:grupocsl/constants/size_screen.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
 import 'package:grupocsl/views/orders/payment/payment_screen.dart';
+import 'package:grupocsl/views/orders/photos/before/photos_before_screen.dart';
 import 'package:grupocsl/views/orders/signature/signature_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -143,6 +144,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                 Get.to(PaymentScreen(widget.orderService));
               },
               child: const Text('Abrir pagamento'),
+            ),
+            RaisedButton(
+              onPressed: (){
+                Get.to(PhotoBeforeScreen());
+              },
+              child: const Text('Fotos antes'),
             ),
           ],
         ),
