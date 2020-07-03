@@ -21,9 +21,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
   final List<OrderService> orders = [
     OrderService(
       number: '12',
+      value: '29,99',
+      parceled: true,
       hour: '08:00',
       client: 'Victor',
-      date: '2/7/2020',
+      date: '3/7/2020',
       status: 0,
       type: 'À vista',
       tel: '1120154933',
@@ -34,6 +36,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
     ),
     OrderService(
       number: '22',
+      value: '29,99',
+      parceled: false,
       hour: '11:00',
       client: 'Alana',
       date: '3/7/2020',
@@ -48,8 +52,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
     OrderService(
       number: '40',
       hour: '14:00',
+      value: '29,99',
+      parceled: false,
       client: 'João',
-      date: '2/7/2020',
+      date: '4/7/2020',
       status: 1,
       type: 'À vista',
       tel: '1120154933',

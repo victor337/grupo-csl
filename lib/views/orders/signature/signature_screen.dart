@@ -1,19 +1,16 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:grupocsl/constants/size_screen.dart';
 import 'package:signature/signature.dart';
 
-void main() => runApp(Teste());
 
-class Teste extends StatefulWidget {
+class SignatureScreen extends StatefulWidget {
   @override
-  _TesteState createState() => _TesteState();
+  _SignatureScreenState createState() => _SignatureScreenState();
 }
 
-class _TesteState extends State<Teste> {
+class _SignatureScreenState extends State<SignatureScreen> {
   
   final SignatureController _controller = SignatureController(
     penStrokeWidth: 5,
@@ -23,7 +20,15 @@ class _TesteState extends State<Teste> {
 
   SizeScreen sizeScreen = SizeScreen();
 
-  Function pop;
+  @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +56,6 @@ class _TesteState extends State<Teste> {
         ),
       );
     }
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
 
     return WillPopScope(
       onWillPop: setpop,

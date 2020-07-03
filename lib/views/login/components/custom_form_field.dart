@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 
 class CustomFormField extends StatelessWidget {
@@ -12,6 +13,7 @@ class CustomFormField extends StatelessWidget {
   final IconData iconData;
   final bool obscureText;
   final VoidCallback setObscure;
+  final List<TextInputFormatter> inputformatters;
 
   const CustomFormField(
     {
@@ -24,6 +26,7 @@ class CustomFormField extends StatelessWidget {
       @required this.iconData,
       this.obscureText,
       this.setObscure,
+      this.inputformatters,
     }
   );
 
@@ -50,6 +53,7 @@ class CustomFormField extends StatelessWidget {
           color: Colors.black
         ),
         cursorColor: Colors.white,
+        inputFormatters: inputformatters ?? [],
         decoration: InputDecoration(
           icon: Icon(
             iconData,

@@ -5,6 +5,7 @@ import 'package:grupocsl/model/adress/adress_model.dart';
 class OrderService {
 
   String number;
+  String value;
   String hour;
   String client;
   int status;
@@ -15,6 +16,7 @@ class OrderService {
   String phone;
   Adress adress;
   String observation;
+  bool parceled;
 
 
 
@@ -30,6 +32,8 @@ class OrderService {
     @required this.phone,
     @required this.adress,
     @required this.observation,
+    @required this.parceled,
+    @required this.value,
   });
 
 }

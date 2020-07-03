@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/constants/size_screen.dart';
-import 'package:grupocsl/controllers/orders/back_controller.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
-import 'package:grupocsl/views/orders/details/teste.dart';
+import 'package:grupocsl/views/orders/payment/payment_screen.dart';
+import 'package:grupocsl/views/orders/signature/signature_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -21,14 +21,17 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
 
   final SizeScreen sizeScreen = SizeScreen();
 
-  
-
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ]);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -131,9 +134,15 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
             ),
             RaisedButton(
               onPressed: (){
-                Get.to(Teste());
+                Get.to(SignatureScreen());
               },
               child: const Text('Abrir canvas'),
+            ),
+            RaisedButton(
+              onPressed: (){
+                Get.to(PaymentScreen(widget.orderService));
+              },
+              child: const Text('Abrir pagamento'),
             ),
           ],
         ),
