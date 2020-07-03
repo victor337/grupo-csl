@@ -40,6 +40,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<key>NSCameraUsageDescription</key>
+	<string>Tirar as fotos do local da ordem de serviço antes e depois</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>imagens da ordem se serviço antes e depois e envio das mesmas ao banco de dados</string>
 	<false/>
 </dict>
 </plist>

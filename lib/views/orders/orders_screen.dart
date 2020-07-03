@@ -28,7 +28,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       type: 'À vista',
       tel: '1120154933',
       paid: false,
-      adress: Adress(street: 'Rua Fulano', number: 152, neighborhood: 'Colonial', city: 'SÃO PAULO', state: 'SP'),
+      adress: Adress(street: 'Rua archangelo archina', number: 553, neighborhood: 'Vila Flavia', city: 'SÃO PAULO', state: 'SP'),
       phone: '11977261437',
       observation: 'São coisas e pá',
     ),

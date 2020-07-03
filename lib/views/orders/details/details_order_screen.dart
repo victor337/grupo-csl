@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grupocsl/constants/size_screen.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class DetailOrderScreen extends StatelessWidget {
@@ -87,7 +88,11 @@ class DetailOrderScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Endereço: ${orderService.adress}',
+                      // ignore: missing_whitespace_between_adjacent_strings
+                      'Endereço: ${orderService.adress.street},'
+                      // ignore: missing_whitespace_between_adjacent_strings
+                      '${orderService.adress.number}, ${orderService.adress.complement??''}'
+                      '${orderService.adress.city} - ${orderService.adress.state}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
@@ -101,6 +106,15 @@ class DetailOrderScreen extends StatelessWidget {
                 ),
               ),
             ),
+            RaisedButton(
+              onPressed: (){
+                launch(
+                  'https://www.google.com/maps/place/${orderService.adress.street}+'
+                  '${orderService.adress.number}'
+                );
+              },
+              child: const Text('Abrir no Maps'),
+            )
           ],
         ),
       ),
