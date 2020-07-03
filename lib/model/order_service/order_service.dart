@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:grupocsl/model/adress/adress_model.dart';
+import 'package:grupocsl/model/order_service/services_model.dart';
 
 class OrderService {
 
   String number;
-  String value;
   String hour;
   String client;
   int status;
@@ -17,6 +17,7 @@ class OrderService {
   Adress adress;
   String observation;
   bool parceled;
+  List<Services> services;
 
 
 
@@ -33,7 +34,7 @@ class OrderService {
     @required this.adress,
     @required this.observation,
     @required this.parceled,
-    @required this.value,
+    @required this.services,
   });
 
 }

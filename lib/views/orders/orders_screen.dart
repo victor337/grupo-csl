@@ -5,6 +5,7 @@ import 'package:grupocsl/constants/size_screen.dart';
 import 'package:grupocsl/controllers/orders/orders_controller.dart';
 import 'package:grupocsl/model/adress/adress_model.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
+import 'package:grupocsl/model/order_service/services_model.dart';
 import 'package:grupocsl/views/orders/components/order_option.dart';
 import 'package:grupocsl/views/orders/details/details_order_screen.dart';
 
@@ -21,7 +22,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
   final List<OrderService> orders = [
     OrderService(
       number: '12',
-      value: '29,99',
       parceled: true,
       hour: '08:00',
       client: 'Victor',
@@ -31,12 +31,15 @@ class _OrdersScreenState extends State<OrdersScreen> {
       tel: '1120154933',
       paid: false,
       adress: Adress(street: 'Rua archangelo archina', number: 553, neighborhood: 'Vila Flavia', city: 'SÃO PAULO', state: 'SP'),
+      services: [
+        Services(code: 20, service: 'Limpeza de sofá', quantity: 1, value: 20),
+        Services(code: 21, service: 'Limpeza de colchão', quantity: 2, value: 40),
+      ],
       phone: '11977261437',
       observation: 'São coisas e pá',
     ),
     OrderService(
       number: '22',
-      value: '29,99',
       parceled: false,
       hour: '11:00',
       client: 'Alana',
@@ -46,13 +49,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
       tel: '1120154933',
       paid: false,
       adress: Adress(street: 'Rua Fulano', number: 152, neighborhood: 'Colonial', city: 'SÃO PAULO', state: 'SP'),
+      services: [
+        Services(code: 20, service: 'Limpeza de sofá', quantity: 1, value: 20),
+        Services(code: 21, service: 'Limpeza de colchão', quantity: 2, value: 40),
+      ],
       phone: '11977261437',
       observation: 'São coisas e pá',
     ),
     OrderService(
       number: '40',
       hour: '14:00',
-      value: '29,99',
       parceled: false,
       client: 'João',
       date: '4/7/2020',
@@ -61,6 +67,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
       tel: '1120154933',
       paid: false,
       adress: Adress(street: 'Rua Fulano', number: 152, neighborhood: 'Colonial', city: 'SÃO PAULO', state: 'SP'),
+      services: [
+        Services(code: 20, service: 'Limpeza de sofá', quantity: 1, value: 20),
+        Services(code: 21, service: 'Limpeza de colchão', quantity: 2, value: 40),
+      ],
       phone: '11977261437',
       observation: 'São coisas e pá',
     ),

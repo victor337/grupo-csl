@@ -11,7 +11,7 @@ class PhotoBeforeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Adicionar fotos'
         ),
       ),
@@ -28,7 +28,7 @@ class PhotoBeforeScreen extends StatelessWidget {
               itemCount: photoBeforeController.images.length + 1,
               itemBuilder: (ctx, index){
                 if(index < photoBeforeController.images.length){
-                  return ListImages(photoBeforeController.images[index].path);
+                  return ListImages(photoBeforeController.images[index].path, index);
                 } else{
                   return AddTileWidget();
                 }

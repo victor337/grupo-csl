@@ -33,6 +33,15 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double setTotalValue(){
+      double finalValue = 0;
+      for(final values in widget.orderService.services){
+        finalValue = values.value + finalValue;
+      }
+      return finalValue;
+    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -111,6 +120,81 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                       // ignore: missing_whitespace_between_adjacent_strings
                       '${widget.orderService.adress.number}, ${widget.orderService.adress.complement??''}'
                       '${widget.orderService.adress.city} - ${widget.orderService.adress.state}',
+                    ),
+                    const SizedBox(height: 5,),
+                    Text(
+                      'Data do Pedido: ${widget.orderService.date}',
+                    ),
+                    const SizedBox(height: 5,),
+                    Text(
+                      'Horário: ${widget.orderService.hour}',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              color: Colors.transparent,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(15, 25, 10, 25),
+                width: sizeScreen.getWidthScreen(context),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Observação: ${widget.orderService.observation??''}',
+                    ),
+                    const SizedBox(height: 5,),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.orderService.services.length,
+                      itemBuilder: (ctx, index){
+                        return Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Text(
+                                    'Código: ${widget.orderService.services[index].code.toString()}: '
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'Serviço: ${widget.orderService.services[index].service.toString()}',
+                                    textAlign: TextAlign.center
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'Quantidade: ${widget.orderService.services[index].quantity.toString()}',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'Valor: R\$${widget.orderService.services[index].value.toStringAsFixed(2).replaceAll('.', ',')}',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider()
+                          ],
+                        );
+                      }
+                    ),
+                    const SizedBox(height: 5,),
+                    Text(
+                      'Tipo: ${widget.orderService.type}',
+                    ),
+                    const SizedBox(height: 5,),
+                    Text(
+                      'Valor total R\$${setTotalValue().toStringAsFixed(2).replaceAll('.', ',')}'
                     ),
                     const SizedBox(height: 5,),
                     Text(

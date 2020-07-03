@@ -15,6 +15,14 @@ class PaymentScreen extends StatelessWidget {
 
   final SizeScreen sizeScreen = SizeScreen();
 
+   double setTotalValue(){
+      double finalValue = 0;
+      for(final values in orderService.services){
+        finalValue = values.value + finalValue;
+      }
+      return finalValue;
+    }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +61,7 @@ class PaymentScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Valor a pagar: ${orderService.value}',
+                      'Valor a pagar: R\$${setTotalValue().toStringAsFixed(2).replaceAll('.', ',')}',
                       style: const TextStyle(
                         fontSize: 25
                       ),
@@ -150,6 +158,7 @@ class PaymentScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10,),
                     GetBuilder<PaymentController>(
+                      init: PaymentController(),
                       builder: (paymentController){
                         return IconButton(
                           icon: Icon(Icons.calendar_today),
