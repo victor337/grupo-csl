@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:grupocsl/constants/size_screen.dart';
+import 'package:grupocsl/controllers/orders/back_controller.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
+import 'package:grupocsl/views/orders/details/teste.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-class DetailOrderScreen extends StatelessWidget {
+class DetailOrderScreen extends StatefulWidget {
 
   final OrderService orderService;
-  DetailOrderScreen(this.orderService);
+  const DetailOrderScreen(this.orderService);
+
+  @override
+  _DetailOrderScreenState createState() => _DetailOrderScreenState();
+}
+
+class _DetailOrderScreenState extends State<DetailOrderScreen> {
 
   final SizeScreen sizeScreen = SizeScreen();
 
+  
+
   @override
   Widget build(BuildContext context) {
-
-
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          'Detalhes da OS Nº${orderService.number}',
+          'Detalhes da OS Nº${widget.orderService.number}',
         ),
       ),
       body: Container(
@@ -43,19 +57,19 @@ class DetailOrderScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Ordem de Serviço: ${orderService.number}',
+                      'Ordem de Serviço: ${widget.orderService.number}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Status: ${orderService.status}',
+                      'Status: ${widget.orderService.status}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Pago: ${orderService.paid}',
+                      'Pago: ${widget.orderService.paid}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Tipo de pagamento: ${orderService.type}',
+                      'Tipo de pagamento: ${widget.orderService.type}',
                     ),
                   ],
                 ),
@@ -76,31 +90,31 @@ class DetailOrderScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Cliente: ${orderService.client}',
+                      'Cliente: ${widget.orderService.client}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Telefone: ${orderService.tel}',
+                      'Telefone: ${widget.orderService.tel}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Celular: ${orderService.phone}',
+                      'Celular: ${widget.orderService.phone}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
                       // ignore: missing_whitespace_between_adjacent_strings
-                      'Endereço: ${orderService.adress.street},'
+                      'Endereço: ${widget.orderService.adress.street},'
                       // ignore: missing_whitespace_between_adjacent_strings
-                      '${orderService.adress.number}, ${orderService.adress.complement??''}'
-                      '${orderService.adress.city} - ${orderService.adress.state}',
+                      '${widget.orderService.adress.number}, ${widget.orderService.adress.complement??''}'
+                      '${widget.orderService.adress.city} - ${widget.orderService.adress.state}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Data do Pedido: ${orderService.date}',
+                      'Data do Pedido: ${widget.orderService.date}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Horário: ${orderService.hour}',
+                      'Horário: ${widget.orderService.hour}',
                     ),
                   ],
                 ),
@@ -109,15 +123,22 @@ class DetailOrderScreen extends StatelessWidget {
             RaisedButton(
               onPressed: (){
                 launch(
-                  'https://www.google.com/maps/place/${orderService.adress.street}+'
-                  '${orderService.adress.number}'
+                  'https://www.google.com/maps/place/${widget.orderService.adress.street}+'
+                  '${widget.orderService.adress.number}'
                 );
               },
               child: const Text('Abrir no Maps'),
-            )
+            ),
+            RaisedButton(
+              onPressed: (){
+                Get.to(Teste());
+              },
+              child: const Text('Abrir canvas'),
+            ),
           ],
         ),
       ),
     );
   }
+
 }

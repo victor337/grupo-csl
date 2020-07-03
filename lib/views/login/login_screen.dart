@@ -48,134 +48,136 @@ class LoginScreen extends StatelessWidget {
               ]
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: sizeScreen.getHeightScreen(context) / 6,
-                child: FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: 'http://www.carroesofalimpo.com.br/img/logo.png',
-                  fit: BoxFit.contain,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  height: sizeScreen.getHeightScreen(context) / 6,
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: 'http://www.carroesofalimpo.com.br/img/logo.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: const <Widget>[
-                  Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18
+                const SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const <Widget>[
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              GetBuilder<LoginController>(
-                init: LoginController(),
-                builder: (loginController){
-                  return CustomFormField(
-                    focusNode: focusLogin,
-                    onChanged: (login){
-                      loginController.setlogin(login);
-                    },
-                    hintText: 'Seu login',
-                    onFieldSubmitted: (text){
-                      focusLogin.unfocus();
-                      FocusScope.of(context).requestFocus(focusPass);
-                    },
-                    textInputAction: TextInputAction.next,
-                    keyBoardType: TextInputType.emailAddress,
-                    iconData: Icons.email
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: const <Widget>[
-                  Text(
-                    'Senha',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18
+                  ],
+                ),
+                GetBuilder<LoginController>(
+                  init: LoginController(),
+                  builder: (loginController){
+                    return CustomFormField(
+                      focusNode: focusLogin,
+                      onChanged: (login){
+                        loginController.setlogin(login);
+                      },
+                      hintText: 'Seu login',
+                      onFieldSubmitted: (text){
+                        focusLogin.unfocus();
+                        FocusScope.of(context).requestFocus(focusPass);
+                      },
+                      textInputAction: TextInputAction.next,
+                      keyBoardType: TextInputType.emailAddress,
+                      iconData: Icons.email
+                    );
+                  },
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const <Widget>[
+                    Text(
+                      'Senha',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              GetBuilder<LoginController>(
-                init: LoginController(),
-                builder: (loginController){
-                  return CustomFormField(
-                    focusNode: focusPass,
-                    onChanged: (pass){
-                      loginController.setPass(pass);
-                    },
-                    hintText: 'Sua senha',
-                    onFieldSubmitted: (text){
-                      focusPass.unfocus();
-                    },
-                    textInputAction: TextInputAction.done,
-                    keyBoardType: TextInputType.emailAddress,
-                    iconData: Icons.lock
-                  );
-                },
-              ),
-              const SizedBox(height: 20,),
-              GetBuilder<LoginController>(
-                init: LoginController(),
-                builder: (loginController){
-                  return GetBuilder<UserController>(
-                    init: UserController(),
-                    builder: (userController){
-                      return Container(
-                        width: sizeScreen.getWidthScreen(context),
-                        child: RaisedButton(
-                          color: Theme.of(context).primaryColor,
-                          disabledColor: Colors.grey,
-                          onPressed: loginController.isValid ?(){
-                            userController.login(
-                              teste: (){
-                                Get.toNamed('/base');
-                                Get.snackbar(
-                                  'Sucesso',
-                                  'Logado com sucesso',
-                                  backgroundColor: const Color(0xff48c2e7),
-                                  colorText: Colors.white,
-                                  duration: const Duration(
-                                    seconds: 2
-                                  )
-                                );
-                              }
-                            );
-                          } : null,
-                          child: userController.isLoading ?
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation(Colors.white),
+                  ],
+                ),
+                GetBuilder<LoginController>(
+                  init: LoginController(),
+                  builder: (loginController){
+                    return CustomFormField(
+                      focusNode: focusPass,
+                      onChanged: (pass){
+                        loginController.setPass(pass);
+                      },
+                      hintText: 'Sua senha',
+                      onFieldSubmitted: (text){
+                        focusPass.unfocus();
+                      },
+                      textInputAction: TextInputAction.done,
+                      keyBoardType: TextInputType.emailAddress,
+                      iconData: Icons.lock
+                    );
+                  },
+                ),
+                const SizedBox(height: 20,),
+                GetBuilder<LoginController>(
+                  init: LoginController(),
+                  builder: (loginController){
+                    return GetBuilder<UserController>(
+                      init: UserController(),
+                      builder: (userController){
+                        return Container(
+                          width: sizeScreen.getWidthScreen(context),
+                          child: RaisedButton(
+                            color: Theme.of(context).primaryColor,
+                            disabledColor: Colors.grey,
+                            onPressed: loginController.isValid ?(){
+                              userController.login(
+                                teste: (){
+                                  Get.toNamed('/base');
+                                  Get.snackbar(
+                                    'Sucesso',
+                                    'Logado com sucesso',
+                                    backgroundColor: const Color(0xff48c2e7),
+                                    colorText: Colors.white,
+                                    duration: const Duration(
+                                      seconds: 2
+                                    )
+                                  );
+                                }
+                              );
+                            } : null,
+                            child: userController.isLoading ?
+                            const Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                                ),
                               ),
-                            ),
-                          ) :  Container(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10) ,
-                            child: const Text(
-                              "Entrar",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20
+                            ) :  Container(
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10) ,
+                              child: const Text(
+                                "Entrar",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
