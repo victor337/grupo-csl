@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:grupocsl/common/drawer/custom_drawer.dart';
 import 'package:grupocsl/constants/size_screen.dart';
 import 'package:grupocsl/controllers/orders/orders_controller.dart';
-import 'package:grupocsl/model/adress/adress_model.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
-import 'package:grupocsl/model/order_service/services_model.dart';
 import 'package:grupocsl/views/orders/components/order_option.dart';
 import 'package:grupocsl/views/orders/details/details_order_screen.dart';
 
@@ -19,62 +17,7 @@ class OrdersScreen extends StatefulWidget {
 class _OrdersScreenState extends State<OrdersScreen> {
   final SizeScreen sizeScreen = SizeScreen();
 
-  final List<OrderService> orders = [
-    OrderService(
-      number: '12',
-      parceled: true,
-      hour: '08:00',
-      client: 'Victor',
-      date: '3/7/2020',
-      status: 0,
-      type: 'À vista',
-      tel: '1120154933',
-      paid: false,
-      adress: Adress(street: 'Rua archangelo archina', number: 553, neighborhood: 'Vila Flavia', city: 'SÃO PAULO', state: 'SP'),
-      services: [
-        Services(code: 20, service: 'Limpeza de sofá', quantity: 1, value: 20),
-        Services(code: 21, service: 'Limpeza de colchão', quantity: 2, value: 40),
-      ],
-      phone: '11977261437',
-      observation: 'São coisas e pá',
-    ),
-    OrderService(
-      number: '22',
-      parceled: false,
-      hour: '11:00',
-      client: 'Alana',
-      date: '3/7/2020',
-      status: 2,
-      type: 'À vista',
-      tel: '1120154933',
-      paid: false,
-      adress: Adress(street: 'Rua Fulano', number: 152, neighborhood: 'Colonial', city: 'SÃO PAULO', state: 'SP'),
-      services: [
-        Services(code: 20, service: 'Limpeza de sofá', quantity: 1, value: 20),
-        Services(code: 21, service: 'Limpeza de colchão', quantity: 2, value: 40),
-      ],
-      phone: '11977261437',
-      observation: 'São coisas e pá',
-    ),
-    OrderService(
-      number: '40',
-      hour: '14:00',
-      parceled: false,
-      client: 'João',
-      date: '4/7/2020',
-      status: 1,
-      type: 'À vista',
-      tel: '1120154933',
-      paid: false,
-      adress: Adress(street: 'Rua Fulano', number: 152, neighborhood: 'Colonial', city: 'SÃO PAULO', state: 'SP'),
-      services: [
-        Services(code: 20, service: 'Limpeza de sofá', quantity: 1, value: 20),
-        Services(code: 21, service: 'Limpeza de colchão', quantity: 2, value: 40),
-      ],
-      phone: '11977261437',
-      observation: 'São coisas e pá',
-    ),
-  ];
+  List<OrderService> orders;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +48,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         builder: (ordersController){
                           return Text(
                             'OS do dia ${ordersController.date}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18
                             ),
@@ -155,7 +98,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 return Expanded(
                   child: ListView(
                     children: orders.where(
-                      (element) => element.date == ordersController.date).map(
+                      (element) => element.dateOrder == ordersController.date).map(
                         (e) => GestureDetector(
                           onTap: (){
                             Get.to(DetailOrderScreen(e));

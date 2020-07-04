@@ -14,22 +14,13 @@ class PaymentScreen extends StatelessWidget {
   final FocusNode valueFocus = FocusNode();
 
   final SizeScreen sizeScreen = SizeScreen();
-
-   double setTotalValue(){
-      double finalValue = 0;
-      for(final values in orderService.services){
-        finalValue = values.value + finalValue;
-      }
-      return finalValue;
-    }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          'Pagamento OS ${orderService.number}',
+          'Pagamento OS ${orderService.id}',
           style: const TextStyle(
             color: Colors.white
           ),
@@ -55,13 +46,13 @@ class PaymentScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      'Parcelado: ${orderService.parceled}',
+                      'Parcelado: ${orderService.numInstallments}',
                       style: const TextStyle(
                         fontSize: 25
                       ),
                     ),
                     Text(
-                      'Valor a pagar: R\$${setTotalValue().toStringAsFixed(2).replaceAll('.', ',')}',
+                      'Valor a pagar: R\$${orderService.value}',
                       style: const TextStyle(
                         fontSize: 25
                       ),
@@ -117,7 +108,7 @@ class PaymentScreen extends StatelessWidget {
                       ),
                     ),
                     Visibility(
-                      visible: orderService.parceled,
+                      visible: int.parse(orderService.numInstallments) > 1,
                       child: Column(
                         children: <Widget>[
                           const SizedBox(height: 10,),

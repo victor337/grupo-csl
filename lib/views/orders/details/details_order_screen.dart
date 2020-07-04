@@ -34,19 +34,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   @override
   Widget build(BuildContext context) {
 
-    double setTotalValue(){
-      double finalValue = 0;
-      for(final values in widget.orderService.services){
-        finalValue = values.value + finalValue;
-      }
-      return finalValue;
-    }
 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          'Detalhes da OS Nº${widget.orderService.number}',
+          'Detalhes da OS Nº${widget.orderService.id}',
         ),
       ),
       body: Container(
@@ -70,7 +63,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Ordem de Serviço: ${widget.orderService.number}',
+                      'Ordem de Serviço: ${widget.orderService.id}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
@@ -78,11 +71,11 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Pago: ${widget.orderService.paid}',
+                      'Pago: ${widget.orderService.statusDesc}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Tipo de pagamento: ${widget.orderService.type}',
+                      'Tipo de pagamento: ${widget.orderService.typePayment}',
                     ),
                   ],
                 ),
@@ -103,27 +96,23 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Cliente: ${widget.orderService.client}',
+                      'Cliente: ${widget.orderService.clientName}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Telefone: ${widget.orderService.tel}',
+                      'Telefone: ${widget.orderService.clientPhone}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Celular: ${widget.orderService.phone}',
+                      'Celular: ${widget.orderService.clientCel}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      // ignore: missing_whitespace_between_adjacent_strings
-                      'Endereço: ${widget.orderService.adress.street},'
-                      // ignore: missing_whitespace_between_adjacent_strings
-                      '${widget.orderService.adress.number}, ${widget.orderService.adress.complement??''}'
-                      '${widget.orderService.adress.city} - ${widget.orderService.adress.state}',
+                      'Endereço: ${widget.orderService.adress},'
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Data do Pedido: ${widget.orderService.date}',
+                      'Data do Pedido: ${widget.orderService.dateOrder}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
@@ -160,12 +149,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                               children: <Widget>[
                                 Expanded(
                                   child: Text(
-                                    'Código: ${widget.orderService.services[index].code.toString()}: '
+                                    'Código: ${widget.orderService.services[index].id.toString()}: '
                                   ),
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'Serviço: ${widget.orderService.services[index].service.toString()}',
+                                    'Serviço: ${widget.orderService.services[index].name.toString()}',
                                     textAlign: TextAlign.center
                                   ),
                                 ),
@@ -177,7 +166,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'Valor: R\$${widget.orderService.services[index].value.toStringAsFixed(2).replaceAll('.', ',')}',
+                                    'Valor: R\$${widget.orderService.services[index].value}',
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -190,15 +179,15 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Tipo: ${widget.orderService.type}',
+                      'Tipo: ${widget.orderService.typePayment}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Valor total R\$${setTotalValue().toStringAsFixed(2).replaceAll('.', ',')}'
+                      'Valor total R\$${widget.orderService.value}'
                     ),
                     const SizedBox(height: 5,),
                     Text(
-                      'Data do Pedido: ${widget.orderService.date}',
+                      'Data do Pedido: ${widget.orderService.dateOrder}',
                     ),
                     const SizedBox(height: 5,),
                     Text(
@@ -211,8 +200,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
             RaisedButton(
               onPressed: (){
                 launch(
-                  'https://www.google.com/maps/place/${widget.orderService.adress.street}+'
-                  '${widget.orderService.adress.number}'
+                  'https://www.google.com/maps/place/${widget.orderService.adress}'
                 );
               },
               child: const Text('Abrir no Maps'),

@@ -30,7 +30,7 @@ class OrderOption extends StatelessWidget {
         title: Row(
           children: <Widget>[
             Text(
-              'OS ${orderService.number}',
+              'OS ${orderService.id}',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold
@@ -51,7 +51,7 @@ class OrderOption extends StatelessWidget {
           ],
         ),
         subtitle: Text(
-          orderService.client,
+          orderService.clientName,
           style: TextStyle(
             color: Colors.black
           ),
@@ -61,7 +61,7 @@ class OrderOption extends StatelessWidget {
           width: 30,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: setColor(orderService.status)
+            color: setColor(int.parse(orderService.status)),
           ),
         ),
       ),

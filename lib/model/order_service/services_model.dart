@@ -1,17 +1,20 @@
-import 'package:flutter/material.dart';
 
 class Services {
 
-  int code;
-  String service;
-  int quantity;
-  double value;
+  String id;
+  String name;
+  String value;
+  String type;
+  String quantity;
+  String t;
 
-  Services({
-    @required this.code,
-    @required this.service,
-    @required this.quantity,
-    @required this.value,
-  });
+  Services.fromMap(Map<String, dynamic> data){
+    id = data["id"] as String;
+    name = data["name"] as String;
+    value = data["value"] as String;
+    type = data["type"] as String;
+    quantity = data["quantity"] as String;
+    t = data["t"] as String;
+  }
 
 }
