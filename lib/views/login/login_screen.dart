@@ -138,16 +138,30 @@ class LoginScreen extends StatelessWidget {
                             disabledColor: Colors.grey,
                             onPressed: loginController.isValid ?(){
                               userController.login(
-                                teste: (){
-                                  Get.toNamed('/base');
+                                login: loginController.login,
+                                pass: loginController.pass,
+                                onSucess: (){
+                                  Get.offAllNamed('/base');
                                   Get.snackbar(
                                     'Sucesso',
-                                    'Logado com sucesso',
-                                    backgroundColor: const Color(0xff48c2e7),
+                                    'Você logou com sucesso',
                                     colorText: Colors.white,
-                                    duration: const Duration(
-                                      seconds: 2
-                                    )
+                                    backgroundColor: const Color(0xff48c2e7)
+                                  );
+                                },
+                                authFail: (){
+                                  Get.snackbar(
+                                    'Falha',
+                                    'Usuário não encontrado',
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.red
+                                  );
+                                },
+                                onFail: (e){
+                                  Get.snackbar(
+                                    'Erro', 'Erro desconhecido.',
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.red
                                   );
                                 }
                               );
