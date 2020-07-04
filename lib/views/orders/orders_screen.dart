@@ -93,21 +93,29 @@ class _OrdersScreenState extends State<OrdersScreen> {
               ),
             ),
             GetBuilder<OrdersController>(
-              init: OrdersController(),
               builder: (ordersController){
-                return Expanded(
-                  child: ListView(
-                    children: orders.where(
-                      (element) => element.dateOrder == ordersController.date).map(
-                        (e) => GestureDetector(
-                          onTap: (){
-                            Get.to(DetailOrderScreen(e));
-                          },
-                          child: OrderOption(e)
-                      )
-                    ).toList(),
-                  ),
+                ordersController.findOrders(
+                  token: '3af3a6e054a31ad486ba7456a06d14536885f6d8',
+                  onSucess: (){},
+                  onFail: (){}
                 );
+                if(ordersController.orders == null || ordersController.orders.isEmpty){
+                  return const Center(child: CircularProgressIndicator());
+                } else{
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: ordersController.orders.length,
+                      itemBuilder: (ctx, index){
+                        return GestureDetector(
+                            onTap: (){
+                              Get.to(DetailOrderScreen(ordersController.orders[index]));
+                            },
+                            child: OrderOption(ordersController.orders[index])
+                        );
+                      }
+                    ),
+                  );
+                }
               },
             ),
           ],

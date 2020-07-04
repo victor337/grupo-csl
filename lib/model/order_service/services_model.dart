@@ -1,4 +1,3 @@
-
 class Services {
 
   String id;
@@ -6,15 +5,15 @@ class Services {
   String value;
   String type;
   String quantity;
-  String t;
+  int t;
 
   Services.fromMap(Map<String, dynamic> data){
-    id = data["id"] as String;
+    id = data["id"].toString();
     name = data["name"] as String;
     value = data["value"] as String;
     type = data["type"] as String;
     quantity = data["quantity"] as String;
-    t = data["t"] as String;
+    t = data["t"] as int;
   }
 
 }

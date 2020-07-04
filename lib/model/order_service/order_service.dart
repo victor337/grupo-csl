@@ -12,7 +12,7 @@ class OrderService {
   String statusAttendanceDesc;
   String statusAttendance;
   String status;
-  List<Services> services;
+  List<Services> services = [];
   String value;
   String numInstallments;
   String typePayment;
@@ -24,7 +24,6 @@ class OrderService {
   String clientEmail;
   String clientObservation;
 
-
   OrderService.fromMap(Map<String, dynamic> data){
     id = data["id"] as String;
     adress = data["endereco"] as String;
@@ -35,7 +34,9 @@ class OrderService {
     statusAttendanceDesc = data["statusAtendimentoDesc"] as String;
     statusAttendance = data["statusAtendimento"] as String;
     status = data["status"] as String;
-    services = Services.fromMap(data["servicos"] as Map<String, dynamic>) as List<Services>;
+    for(final map in data["servicos"]){
+      services.add(Services.fromMap(map as Map<String, dynamic>));
+    }
     value = data["valor"] as String;
     numInstallments = data["numParcelas"] as String;
     typePayment = data["tipoPagamento"] as String;
