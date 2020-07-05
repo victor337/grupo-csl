@@ -14,6 +14,5 @@ class PhotoBeforeController extends GetxController {
   void removerImage(int index){
     images.removeAt(index);
     update();
-  }
-  
+  }  
 }
