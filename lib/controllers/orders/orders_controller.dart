@@ -7,8 +7,10 @@ import 'package:http/http.dart' as http;
 
 class OrdersController extends GetxController {
 
-  String date = '2020-07-03'; // '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
-  DateTime dateNotFormated = DateTime(DateTime.now().year, 
+  String date = '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}';
+  String dateFormated =
+    '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  DateTime dateNotFormated = DateTime(DateTime.now().year,
   DateTime.now().month,DateTime.now().day, );
 
   bool isLoading = false;
@@ -43,7 +45,7 @@ class OrdersController extends GetxController {
   void setDate(DateTime data){
     dateNotFormated = data;
     final String dateFormated = '${data.day}/${data.month}/${data.year}';
-    date = dateFormated;
+    date = data.toString().substring(0, 10);
     update();
   }
 

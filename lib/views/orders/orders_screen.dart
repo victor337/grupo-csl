@@ -45,7 +45,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         init: OrdersController(),
                         builder: (ordersController){
                           return Text(
-                            'OS do dia ${ordersController.date}',
+                            'OS do dia ${ordersController.dateFormated}',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18
@@ -102,12 +102,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         child: ListView.builder(
                           itemCount: snapshot.data.length as int,
                           itemBuilder: (ctx, index){
-                            return GestureDetector(
+                            if(snapshot.data[index].dateOrder == ordersController.date){
+                              return GestureDetector(
                                 onTap: (){
-                                  Get.to(DetailOrderScreen(snapshot.data[index] as OrderService));
+                                  Get.to(
+                                    DetailOrderScreen(snapshot.data[index] as OrderService)
+                                  );
                                 },
                                 child: OrderOption(snapshot.data[index] as OrderService)
-                            );
+                              );
+                            } return Container();
                           }
                         ),
                       );
