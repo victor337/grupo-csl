@@ -140,6 +140,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                     ),
                     const SizedBox(height: 5,),
                     ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: widget.orderService.services.length,
                       itemBuilder: (ctx, index){

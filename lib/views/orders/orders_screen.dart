@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:grupocsl/common/drawer/custom_drawer.dart';
 import 'package:grupocsl/constants/size_screen.dart';
 import 'package:grupocsl/controllers/orders/orders_controller.dart';
-import 'package:grupocsl/views/login/components/custom_form_field.dart';
 import 'package:grupocsl/views/orders/components/order_option.dart';
 import 'package:grupocsl/views/orders/details/details_order_screen.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -27,6 +26,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: const Text(
           'Listar OS'
         ),
@@ -57,6 +57,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               icon: Icon(Icons.search, color: Colors.white),
                               border: InputBorder.none
                             ),
+                            style: const TextStyle(color: Colors.white),
                             keyboardType: TextInputType.text,
                             onFieldSubmitted: (text){
                               Navigator.of(context).pop(text);
@@ -226,7 +227,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 if(ordersController.ordersFilter[index].dateOrder
                                 == ordersController.dateNotFormated.toString().substring(0, 10)
                                 ){
-                                  print(ordersController.filter);
                                   return GestureDetector(
                                     onTap: (){
                                       Get.to(
@@ -247,7 +247,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           if(ordersController.orders[index].dateOrder
                           == ordersController.dateNotFormated.toString().substring(0, 10)
                           ){
-                            print(ordersController.filter);
                             return GestureDetector(
                               onTap: (){
                                 Get.to(

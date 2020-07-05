@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/common/drawer/components/drawer_option.dart';
 import 'package:grupocsl/constants/size_screen.dart';
-import 'package:grupocsl/model/order_service/drawer/drawer_option_model.dart';
+import 'package:grupocsl/controllers/user/user_controller.dart';
+import 'package:grupocsl/model/drawer/drawer_option_model.dart';
 
 
 
@@ -27,24 +28,29 @@ class CustomDrawer extends StatelessWidget {
               color: Theme.of(context).primaryColor,
               padding: const EdgeInsets.fromLTRB(20, 40, 10, 40),
               width: sizeScreen.getWidthScreen(context),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
-                  Text(
-                    'Nome do usuário',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25
-                    ),
-                  ),
-                  Text(
-                    'Regional XXXX',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 18
-                    ),
-                  ),
-                ],
+              child: GetBuilder<UserController>(
+                init: UserController(),
+                builder: (userController){
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        userController.user.nome,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25
+                        ),
+                      ),
+                      Text(
+                        userController.user.franquia,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             Expanded(

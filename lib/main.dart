@@ -20,14 +20,14 @@ void main() {
           name: '/login',
           page: () => LoginScreen(),
           transition: Transition.rightToLeft,
-          transitionDuration: const Duration(milliseconds: 100)
+          transitionDuration: const Duration(milliseconds: 80)
         ),
         GetPage(
           name: '/base',
           page: () => BaseScreen(),
           transition: Transition.rightToLeft,
           binding: AuthBinding(),
-          transitionDuration: const Duration(milliseconds: 100)
+          transitionDuration: const Duration(milliseconds: 80)
         ),
       ],
       theme: ThemeData(

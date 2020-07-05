@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/controllers/base/base_controller.dart';
-import 'package:grupocsl/model/order_service/drawer/drawer_option_model.dart';
+import 'package:grupocsl/model/drawer/drawer_option_model.dart';
 
 
 class DrawerOption extends StatelessWidget {
