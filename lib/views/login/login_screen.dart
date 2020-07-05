@@ -149,10 +149,10 @@ class LoginScreen extends StatelessWidget {
                                     backgroundColor: const Color(0xff48c2e7)
                                   );
                                 },
-                                authFail: (){
+                                authFail: (erro){
                                   Get.snackbar(
-                                    'Falha',
-                                    'Usuário não encontrado',
+                                    'Falha: ${erro.code}',
+                                    erro.title,
                                     colorText: Colors.white,
                                     backgroundColor: Colors.red
                                   );

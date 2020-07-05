@@ -1,4 +1,3 @@
-import 'package:compressimage/compressimage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/controllers/orders/photos_before_controller.dart';
@@ -81,11 +80,8 @@ class AddTileWidget extends StatelessWidget {
                             );
                             return;
                           }
-                          await CompressImage.compress(
-                            imageSrc: pickedFile.path,
-                            desiredQuality: 80
-                          );
                           photoBeforeScreen.addImage(pickedFile);
+                          
                         }
                       },
                     ),
@@ -135,10 +131,6 @@ class AddTileWidget extends StatelessWidget {
                             );
                             return;
                           }
-                          await CompressImage.compress(
-                            imageSrc: pickedFile.path,
-                            desiredQuality: 50
-                          );
                           photoBeforeScreen.addImage(pickedFile);
                         }
                       },

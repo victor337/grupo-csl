@@ -53,7 +53,7 @@ class OrderOption extends StatelessWidget {
         subtitle: Text(
           orderService.clientName,
           style: TextStyle(
-            color: Colors.black
+            color: Colors.grey[400]
           ),
         ),
         trailing: Container(

@@ -20,6 +20,18 @@ class OrdersController extends GetxController {
 
   List<OrderService> orders = [];
 
+  List<OrderService> ordersFilter = [];
+
+
+  String filter;
+  void setFilter(String setFilter){
+    filter = setFilter;
+    ordersFilter.clear();
+    ordersFilter.addAll(orders.where((e) => e.id.contains(filter)));
+    update();
+  }
+
+
   Future<void> findOrders({
     @required String token,
   }) async{
