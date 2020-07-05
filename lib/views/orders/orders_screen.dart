@@ -17,8 +17,6 @@ class OrdersScreen extends StatefulWidget {
 class _OrdersScreenState extends State<OrdersScreen> {
   final SizeScreen sizeScreen = SizeScreen();
 
-  List<OrderService> orders;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,28 +92,28 @@ class _OrdersScreenState extends State<OrdersScreen> {
             ),
             GetBuilder<OrdersController>(
               builder: (ordersController){
-                ordersController.findOrders(
-                  token: '3af3a6e054a31ad486ba7456a06d14536885f6d8',
-                  onSucess: (){},
-                  onFail: (){}
+                return FutureBuilder(
+                  future: ordersController.findOrders(token: '3af3a6e054a31ad486ba7456a06d14536885f6d8'),
+                  builder: (ctx, snapshot){
+                    if(snapshot == null || !snapshot.hasData){
+                      return const Center(child: CircularProgressIndicator());
+                    } else{
+                      return Expanded(
+                        child: ListView.builder(
+                          itemCount: snapshot.data.length as int,
+                          itemBuilder: (ctx, index){
+                            return GestureDetector(
+                                onTap: (){
+                                  Get.to(DetailOrderScreen(snapshot.data[index] as OrderService));
+                                },
+                                child: OrderOption(snapshot.data[index] as OrderService)
+                            );
+                          }
+                        ),
+                      );
+                    }
+                  }
                 );
-                if(ordersController.orders == null || ordersController.orders.isEmpty){
-                  return const Center(child: CircularProgressIndicator());
-                } else{
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: ordersController.orders.length,
-                      itemBuilder: (ctx, index){
-                        return GestureDetector(
-                            onTap: (){
-                              Get.to(DetailOrderScreen(ordersController.orders[index]));
-                            },
-                            child: OrderOption(ordersController.orders[index])
-                        );
-                      }
-                    ),
-                  );
-                }
               },
             ),
           ],

@@ -158,12 +158,14 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                                     textAlign: TextAlign.center
                                   ),
                                 ),
+                                const SizedBox(width: 10,),
                                 Expanded(
                                   child: Text(
                                     'Quantidade: ${widget.orderService.services[index].quantity.toString()}',
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
+                                const SizedBox(width: 10,),
                                 Expanded(
                                   child: Text(
                                     'Valor: R\$${widget.orderService.services[index].value}',

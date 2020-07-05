@@ -16,12 +16,8 @@ class OrdersController extends GetxController {
   final String urlList = 'https://sisteste.carroesofalimpo.com.br/api/listaOS.php';
 
 
-  List<OrderService> orders = [];
-
-  Future<void> findOrders({
+  Future<List<OrderService>> findOrders({
     @required String token,
-    @required Function onSucess,
-    @required Function onFail,
   }) async{
     final response = await http.post(
       urlList,
@@ -32,14 +28,15 @@ class OrdersController extends GetxController {
     );
     final responseData = json.decode(response.body);
     if(responseData != null){
+      final List<OrderService> orders = [];
       for(final map in responseData){
         orders.add(OrderService.fromMap(map as Map<String, dynamic>));
       }
-      onSucess();
       update();
+      return orders;
     }else{
-      onFail();
       update();
+      return null;
     }
   }
 
