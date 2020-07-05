@@ -46,6 +46,7 @@ class OrdersController extends GetxController {
     dateNotFormated = data;
     final String dateFormated = '${data.day}/${data.month}/${data.year}';
     date = data.toString().substring(0, 10);
+    this.dateFormated = dateFormated;
     update();
   }
 
