@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:grupocsl/common/drawer/custom_drawer.dart';
 import 'package:grupocsl/constants/size_screen.dart';
 import 'package:grupocsl/controllers/orders/orders_controller.dart';
-import 'package:grupocsl/model/order_service/order_service.dart';
 import 'package:grupocsl/views/orders/components/order_option.dart';
 import 'package:grupocsl/views/orders/details/details_order_screen.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 
 class OrdersScreen extends StatefulWidget {
@@ -16,6 +16,9 @@ class OrdersScreen extends StatefulWidget {
 
 class _OrdersScreenState extends State<OrdersScreen> {
   final SizeScreen sizeScreen = SizeScreen();
+
+  final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey =
+      GlobalKey<LiquidPullToRefreshState>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +67,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         ),
                       ),
                       GetBuilder<OrdersController>(
+                        init: OrdersController(),
                         builder: (ordersController){
                           return IconButton(
                             icon: Icon(Icons.calendar_today),
@@ -79,6 +83,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                   return;
                                 } else{
                                   ordersController.setDate(date);
+                                  ordersController.findOrders(token: '4084d68a42351aec51588bbbf87ffcfc640200ec');
                                 }
                               });
                             },
@@ -91,33 +96,62 @@ class _OrdersScreenState extends State<OrdersScreen> {
               ),
             ),
             GetBuilder<OrdersController>(
+              init: OrdersController(),
               builder: (ordersController){
-                return FutureBuilder(
-                  future: ordersController.findOrders(token: '3af3a6e054a31ad486ba7456a06d14536885f6d8'),
-                  builder: (ctx, snapshot){
-                    if(snapshot == null || !snapshot.hasData){
-                      return const Center(child: CircularProgressIndicator());
-                    } else{
-                      return Expanded(
-                        child: ListView.builder(
-                          itemCount: snapshot.data.length as int,
-                          itemBuilder: (ctx, index){
-                            if(snapshot.data[index].dateOrder == ordersController.date){
-                              return GestureDetector(
-                                onTap: (){
-                                  Get.to(
-                                    DetailOrderScreen(snapshot.data[index] as OrderService)
-                                  );
-                                },
-                                child: OrderOption(snapshot.data[index] as OrderService)
-                              );
-                            } return Container();
-                          }
-                        ),
-                      );
-                    }
-                  }
-                );
+                if(ordersController.isLoading){
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(Colors.blue)
+                    )
+                  );
+                } else if(ordersController.orders.isEmpty){
+                  return Center(
+                    child: Card(
+                      elevation: 10,
+                      color: const Color(0xff196ca1),
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        child: Column(
+                          children: const <Widget>[
+                             Text(
+                              'Não há OS para este dia!',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white
+                              ),
+                            )
+                          ],
+                        )
+                      ),
+                    ),
+                  );
+                }else{
+                  return Expanded(
+                    child: LiquidPullToRefresh(
+                      key: _refreshIndicatorKey,
+                      showChildOpacityTransition: false,
+                      onRefresh: ()async{
+                        ordersController.findOrders(token: '4084d68a42351aec51588bbbf87ffcfc640200ec');
+                      },
+                      child: ListView.builder(
+                        itemCount: ordersController.orders.length,
+                        itemBuilder: (ctx, index){
+                          if(ordersController.orders[index].dateOrder 
+                          == ordersController.dateNotFormated.toString().substring(0, 10)){
+                            return GestureDetector(
+                              onTap: (){
+                                Get.to(
+                                  DetailOrderScreen(ordersController.orders[index])
+                                );
+                              },
+                              child: OrderOption(ordersController.orders[index])
+                            );
+                          } return Container();
+                        }
+                      ),
+                    ),
+                  );
+                }
               },
             ),
           ],

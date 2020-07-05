@@ -6,7 +6,10 @@ import 'package:grupocsl/model/user/user_model.dart';
 import 'package:http/http.dart' as http;
 
 
+
 class UserController extends GetxController {
+
+  String tokenUser = '4084d68a42351aec51588bbbf87ffcfc640200ec';
 
   bool isLoading = false;
 

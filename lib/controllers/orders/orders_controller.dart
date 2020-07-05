@@ -10,42 +10,47 @@ class OrdersController extends GetxController {
   String date = '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}';
   String dateFormated =
     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+
   DateTime dateNotFormated = DateTime(DateTime.now().year,
-  DateTime.now().month,DateTime.now().day, );
+  DateTime.now().month,DateTime.now().day,);
 
   bool isLoading = false;
 
   final String urlList = 'https://sisteste.carroesofalimpo.com.br/api/listaOS.php';
 
+  List<OrderService> orders = [];
 
-  Future<List<OrderService>> findOrders({
+  Future<void> findOrders({
     @required String token,
   }) async{
+
+    isLoading = true;
+    update();
     final response = await http.post(
       urlList,
       body: {
         'token': token,
-        'data': '2020-07-03'
+        'data': dateNotFormated.toString().substring(0, 10)
       }
     );
     final responseData = json.decode(response.body);
     if(responseData != null){
-      final List<OrderService> orders = [];
+      
+      orders.clear();
       for(final map in responseData){
         orders.add(OrderService.fromMap(map as Map<String, dynamic>));
       }
+      isLoading = false;
       update();
-      return orders;
     }else{
+      isLoading = false;
       update();
-      return null;
     }
   }
 
   void setDate(DateTime data){
     dateNotFormated = data;
     final String dateFormated = '${data.day}/${data.month}/${data.year}';
-    date = data.toString().substring(0, 10);
     this.dateFormated = dateFormated;
     update();
   }

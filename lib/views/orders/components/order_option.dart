@@ -43,7 +43,7 @@ class OrderOption extends StatelessWidget {
               ),
             ),
             Text(
-              orderService.hour,
+              orderService.hour.substring(0, 5),
               style: const TextStyle(
                 color: Colors.white
               ),
