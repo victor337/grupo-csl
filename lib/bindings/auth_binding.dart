@@ -6,7 +6,4 @@ class AuthBinding implements Bindings {
   void dependencies() {
     Get.put(UserController(), permanent: true,);
   }
-
-
-
 }

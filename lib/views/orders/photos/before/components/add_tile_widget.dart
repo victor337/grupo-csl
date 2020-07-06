@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 
-
 class AddTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class AddTileWidget extends StatelessWidget {
                               context: context,
                               child: AlertDialog(
                                 content: const Text(
-                                  'Permirta para poder tirar a foto'
+                                  'Permita para poder tirar a foto'
                                 ),
                                 actions: <Widget>[
                                   FlatButton(
@@ -89,7 +88,11 @@ class AddTileWidget extends StatelessWidget {
                           if(sucess){
                             photoBeforeScreen.addImage(file.path);
                           } else {
-                            print('Erro ao salvar');
+                            Get.snackbar(
+                              'Erro',
+                              'Não foi possível salvar a imagem',
+                              backgroundColor: Colors.red
+                            );
                           }
                           
                         }
@@ -112,8 +115,21 @@ class AddTileWidget extends StatelessWidget {
 
                         if(permissionStorage != PermissionStatus.granted||
                           permissionCamera != PermissionStatus.granted){
-                          Get.dialog(
-                            const Text('Erro de permissão')
+                          showDialog(
+                            context: context,
+                            child: AlertDialog(
+                              content: const Text(
+                                'Permita para poder tirar a foto'
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            )
                           );
                           return;
                         } else {
@@ -145,7 +161,7 @@ class AddTileWidget extends StatelessWidget {
                           if(sucess){
                             photoBeforeScreen.addImage(pickedFile.path);
                           } else {
-                            print('Erro ao salvar');
+                            //TODO: ARRUMAR AQUI
                           }
                         }
                       },

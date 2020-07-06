@@ -1,7 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:get/get.dart';
 import 'package:grupocsl/constants/size_screen.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:signature/signature.dart';
 
 
@@ -19,6 +22,8 @@ class _SignatureScreenState extends State<SignatureScreen> {
   );
 
   SizeScreen sizeScreen = SizeScreen();
+  ScreenshotController screenshotController = ScreenshotController(); 
+
 
   @override
   void initState() {
@@ -71,11 +76,14 @@ class _SignatureScreenState extends State<SignatureScreen> {
           child: Column(
             children: <Widget>[
               //SIGNATURE CANVAS
-              Signature(
-                controller: _controller,
-                height: sizeScreen.getHeightScreenWidthAppBar(context, AppBar()) -
-                sizeScreen.getHeightScreenWidthAppBar(context, AppBar()) / 6,
-                backgroundColor: Colors.white,
+              Screenshot(
+                controller: screenshotController,
+                  child: Signature(
+                  controller: _controller,
+                  height: sizeScreen.getHeightScreenWidthAppBar(context, AppBar()) -
+                  sizeScreen.getHeightScreenWidthAppBar(context, AppBar()) / 6,
+                  backgroundColor: Colors.white,
+                ),
               ),
               //OK AND CLEAR BUTTONS
               Expanded(
@@ -93,25 +101,50 @@ class _SignatureScreenState extends State<SignatureScreen> {
                         icon: const Icon(Icons.check),
                         color: Colors.white,
                         onPressed: () async {
-                          if (_controller.isNotEmpty) {
-                            final data = await _controller.toPngBytes();
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return Scaffold(
-                                    appBar: AppBar(
-                                      title: const Text('Assinatura')
-                                    ),
-                                    body: Center(
-                                      child: Container(
-                                        color: Colors.red,
-                                        child: Image.memory(data)
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
+                          if(_controller.isNotEmpty) {
+                            screenshotController.capture().then((image){
+                              try {
+                                GallerySaver.saveImage(image.path);
+                                Get.bottomSheet(
+                                  BottomSheet(
+                                    onClosing: (){
+                                      Get.back();
+                                    },
+                                    builder: (ctx){
+                                      return Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: const<Widget>[
+                                            Text('Salvo na galeria'),
+                                            Text(
+                                              'Você será redirecionado para a tela anterior',
+                                              style: TextStyle(
+                                                fontSize: 22
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                  )
+                                );
+                              } catch (e) {
+                                Get.dialog(
+                                  AlertDialog(
+                                    content: const Text('Erro ao salvar'),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        onPressed: (){
+                                          Get.back();
+                                        },
+                                        child: const Text('Ok')
+                                      )
+                                    ],
+                                  )
+                                );
+                              }
+                            });
                           }
                         },
                       ),
