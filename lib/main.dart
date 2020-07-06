@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:grupocsl/bindings/auth_binding.dart';
 import 'package:grupocsl/views/base/base_screen.dart';
 import 'package:grupocsl/views/login/login_screen.dart';
 import 'package:grupocsl/views/splash/splash_screen.dart';
 
 
-void main() {
+Future<void> main() async{
+  await GetStorage.init();
   runApp(
     GetMaterialApp(
       initialRoute: '/splash',
@@ -15,11 +17,13 @@ void main() {
         GetPage(
           name: '/splash',
           page: () => SplashScreen(),
+          binding: AuthBinding(),
         ),
         GetPage(
           name: '/login',
           page: () => LoginScreen(),
           transition: Transition.rightToLeft,
+          binding: AuthBinding(),
           transitionDuration: const Duration(milliseconds: 80)
         ),
         GetPage(

@@ -4,7 +4,7 @@ import 'package:grupocsl/controllers/user/user_controller.dart';
 class AuthBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(UserController(), permanent: true);
+    Get.put(UserController(), permanent: true,);
   }
 
 

@@ -48,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       SelectableText(
                         userController.user.nome,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 33
                         ),
@@ -56,12 +56,13 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 40,),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: DetailOption(
-                      title: 'Franquia',
-                      information: userController.user.franquia
-                    ),
+                  Row(
+                    children: <Widget>[
+                      DetailOption(
+                        title: 'Franquia',
+                        information: userController.user.franquia
+                      ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

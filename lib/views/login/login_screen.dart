@@ -146,7 +146,8 @@ class LoginScreen extends StatelessWidget {
                                     'Sucesso',
                                     'Você logou com sucesso',
                                     colorText: Colors.white,
-                                    backgroundColor: const Color(0xff48c2e7)
+                                    backgroundColor: const Color(0xff48c2e7),
+                                    duration: const Duration(seconds: 1)
                                   );
                                 },
                                 authFail: (erro){
