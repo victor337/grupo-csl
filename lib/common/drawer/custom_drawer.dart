@@ -73,7 +73,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             builder: (userController){
               return GestureDetector(
                 onTap: (){
-                  userController.deleteUserData();
                   Get.offAllNamed('/login');
                 },
                 child: Container(

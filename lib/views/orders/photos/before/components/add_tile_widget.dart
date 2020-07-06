@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/controllers/orders/photos_before_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 
 
 class AddTileWidget extends StatelessWidget {
@@ -80,7 +84,13 @@ class AddTileWidget extends StatelessWidget {
                             );
                             return;
                           }
-                          photoBeforeScreen.addImage(pickedFile);
+                          final File file = File(pickedFile.path);
+                          final bool sucess = await GallerySaver.saveImage(file.path);
+                          if(sucess){
+                            photoBeforeScreen.addImage(file.path);
+                          } else {
+                            print('Erro ao salvar');
+                          }
                           
                         }
                       },
@@ -131,7 +141,12 @@ class AddTileWidget extends StatelessWidget {
                             );
                             return;
                           }
-                          photoBeforeScreen.addImage(pickedFile);
+                          final bool sucess = await GallerySaver.saveImage(pickedFile.path);
+                          if(sucess){
+                            photoBeforeScreen.addImage(pickedFile.path);
+                          } else {
+                            print('Erro ao salvar');
+                          }
                         }
                       },
                     ),

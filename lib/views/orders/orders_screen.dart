@@ -2,26 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/common/drawer/custom_drawer.dart';
 import 'package:grupocsl/constants/size_screen.dart';
-import 'package:grupocsl/controllers/orders/orders_controller.dart';
 import 'package:grupocsl/controllers/user/user_controller.dart';
 import 'package:grupocsl/views/orders/components/order_option.dart';
 import 'package:grupocsl/views/orders/details/details_order_screen.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 
-class OrdersScreen extends StatefulWidget {
 
+class OrdersScreen extends StatefulWidget {
   @override
   _OrdersScreenState createState() => _OrdersScreenState();
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
+
   final SizeScreen sizeScreen = SizeScreen();
 
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey =
       GlobalKey<LiquidPullToRefreshState>();
-  
-  FocusNode search = FocusNode();
+
+  final FocusNode search = FocusNode();
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +33,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
           'Listar OS'
         ),
         actions: <Widget>[
-          GetBuilder<OrdersController>(
-            init: OrdersController(),
-            builder: (ordersController){
+          GetBuilder<UserController>(
+            init: UserController(),
+            builder: (userController){
               return IconButton(
                 icon: Icon(Icons.search),
                 onPressed: ()async{
@@ -69,11 +70,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       );
                     },
                   );
-                  ordersController.setFilter(result??'');
+                  userController.setFilter(result??'');
                 }
               );
-            },
-          )
+            }
+          ),
         ],
       ),
       drawer: CustomDrawer(),
@@ -92,11 +93,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     color: const Color(0xff48c2e7),
                     child: Container(
                       padding: const EdgeInsets.all(7),
-                      child: GetBuilder<OrdersController>(
-                        init: OrdersController(),
-                        builder: (ordersController){
+                      child: GetBuilder<UserController>(
+                        init: UserController(),
+                        builder: (userController){
                           return Text(
-                            'OS do dia ${ordersController.dateFormated}',
+                            'OS do dia ${userController.dateFormated}',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18
@@ -114,15 +115,15 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           fontSize: 15
                         ),
                       ),
-                      GetBuilder<OrdersController>(
-                        init: OrdersController(),
-                        builder: (ordersController){
+                      GetBuilder<UserController>(
+                        init: UserController(),
+                        builder: (userController){
                           return IconButton(
                             icon: Icon(Icons.calendar_today),
                             onPressed: (){
                               showDatePicker(
                                 context: context,
-                                initialDate: ordersController.dateNotFormated,
+                                initialDate: userController.dateNotFormated,
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(DateTime.now().year, DateTime.now().month,
                                   DateTime.now().day + 1)
@@ -130,9 +131,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 if(date == null){
                                   return;
                                 } else{
-                                  ordersController.setDate(date);
-                                  ordersController.setFilter('');
-                                  ordersController.findOrders(token: '4084d68a42351aec51588bbbf87ffcfc640200ec');
+                                  userController.setDate(date);
+                                  userController.setFilter('');
+                                  userController.findOrders(
+                                    user: userController.user
+                                  );
                                 }
                               });
                             },
@@ -144,16 +147,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 ],
               ),
             ),
-            GetBuilder<OrdersController>(
-              init: OrdersController(),
-              builder: (ordersController){
-                if(ordersController.isLoading){
+            GetBuilder<UserController>(
+              init: UserController(),
+              builder: (userController){
+                if(userController.isLoading){
                   return Center(
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation(Colors.blue)
                     )
                   );
-                } else if(ordersController.orders.isEmpty){
+                } else if(userController.orders.isEmpty){
                   return Center(
                     child: Card(
                       elevation: 10,
@@ -175,91 +178,98 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     ),
                   );
                 }else{
-                  return Expanded(
-                    child: LiquidPullToRefresh(
-                      key: _refreshIndicatorKey,
-                      showChildOpacityTransition: false,
-                      onRefresh: ()async{
-                        ordersController.findOrders(token: '4084d68a42351aec51588bbbf87ffcfc640200ec');
-                      },
-                      child: ordersController.filter != null && 
-                      ordersController.filter != '' ? 
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: Colors.grey[600]
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Row(
+                  return GetBuilder<UserController>(
+                    init: UserController(),
+                    builder: (userController){
+                      return Expanded(
+                        child: LiquidPullToRefresh(
+                          key: _refreshIndicatorKey,
+                          showChildOpacityTransition: false,
+                          onRefresh: ()async{
+                            userController.findOrders(
+                              user: userController.user
+                            );
+                          },
+                          child: userController.filter != null && 
+                          userController.filter != '' ? 
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: Colors.grey[600]
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    const Text(
-                                      "Você filtrou por: ",
-                                      style: TextStyle(
-                                        color: Colors.white
-                                      )
+                                    Row(
+                                      children: <Widget>[
+                                        const Text(
+                                          "Você filtrou por: ",
+                                          style: TextStyle(
+                                            color: Colors.white
+                                          )
+                                        ),
+                                        Text(
+                                          userController.filter,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold
+                                          )
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      ordersController.filter,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold
-                                      )
-                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.close, color: Colors.red),
+                                      onPressed: (){
+                                        userController.setFilter('');
+                                      },
+                                    )
                                   ],
                                 ),
-                                IconButton(
-                                  icon: Icon(Icons.close, color: Colors.red),
-                                  onPressed: (){
-                                    ordersController.setFilter('');
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: ordersController.ordersFilter.length,
-                              itemBuilder: (ctx, index){
-                                if(ordersController.ordersFilter[index].dateOrder
-                                == ordersController.dateNotFormated.toString().substring(0, 10)
-                                ){
-                                  return GestureDetector(
-                                    onTap: (){
-                                      Get.to(
-                                        DetailOrderScreen(ordersController.ordersFilter[index])
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: userController.ordersFilter.length,
+                                  itemBuilder: (ctx, index){
+                                    if(userController.ordersFilter[index].dateOrder
+                                    == userController.dateNotFormated.toString().substring(0, 10)
+                                    ){
+                                      return GestureDetector(
+                                        onTap: (){
+                                          Get.to(
+                                            DetailOrderScreen(userController.ordersFilter[index])
+                                          );
+                                        },
+                                        child: OrderOption(userController.ordersFilter[index])
                                       );
-                                    },
-                                    child: OrderOption(ordersController.ordersFilter[index])
-                                  );
-                                } return Container();
-                              }
-                      ),
+                                    } return Container();
+                                  }
                           ),
-                        ],
-                      ) :
-                      ListView.builder(
-                        itemCount: ordersController.orders.length,
-                        itemBuilder: (ctx, index){
-                          if(ordersController.orders[index].dateOrder
-                          == ordersController.dateNotFormated.toString().substring(0, 10)
-                          ){
-                            return GestureDetector(
-                              onTap: (){
-                                Get.to(
-                                  DetailOrderScreen(ordersController.orders[index])
+                              ),
+                            ],
+                          ) :
+                          ListView.builder(
+                            itemCount: userController.orders.length,
+                            itemBuilder: (ctx, index){
+                              if(userController.orders[index].dateOrder
+                              == userController.dateNotFormated.toString().substring(0, 10)
+                              ){
+                                return GestureDetector(
+                                  onTap: (){
+                                    Get.to(
+                                      DetailOrderScreen(userController.orders[index])
+                                    );
+                                  },
+                                  child: OrderOption(userController.orders[index])
                                 );
-                              },
-                              child: OrderOption(ordersController.orders[index])
-                            );
-                          } return Container();
-                        }
-                      ),
-                    ),
+                              } return Container();
+                            }
+                          ),
+                        ),
+                      );
+                    },
                   );
                 }
               },

@@ -39,6 +39,7 @@ dependencies:
   liquid_pull_to_refresh: ^2.0.0
   flutter_launcher_icons: ^0.7.5
   get_storage: ^1.2.1
+  gallery_saver: ^2.0.1
 
 
 dev_dependencies:

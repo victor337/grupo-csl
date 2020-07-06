@@ -28,7 +28,7 @@ class PhotoBeforeScreen extends StatelessWidget {
               itemCount: photoBeforeController.images.length + 1,
               itemBuilder: (ctx, index){
                 if(index < photoBeforeController.images.length){
-                  return ListImages(photoBeforeController.images[index].path, index);
+                  return ListImages(photoBeforeController.images[index], index);
                 } else{
                   return AddTileWidget();
                 }

@@ -1,12 +1,11 @@
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 
 class PhotoBeforeController extends GetxController {
 
-  List<PickedFile> images = [];
+  List<String> images = [];
 
-  void addImage(PickedFile file){
+  void addImage(String file){
     images.add(file);
     update();
   }

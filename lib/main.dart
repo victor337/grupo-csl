@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:grupocsl/bindings/auth_binding.dart';
 import 'package:grupocsl/views/base/base_screen.dart';
 import 'package:grupocsl/views/login/login_screen.dart';
 import 'package:grupocsl/views/splash/splash_screen.dart';
 
 
-Future<void> main() async{
-  await GetStorage.init();
+void main() {
   runApp(
     GetMaterialApp(
       initialRoute: '/splash',
