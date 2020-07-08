@@ -141,16 +141,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                         'Os pedidos foram buscados!',
                                         colorText: Colors.white,
                                         backgroundColor: Colors.green,
-                                        duration: const Duration(seconds: 1)
+                                        duration: const Duration(seconds: 2)
                                       );
                                     },
                                     onError: (e){
                                       Get.snackbar(
                                         e.code,
-                                        'Não há pedidos para está data',
+                                        'Não há pedidos para esta data',
                                         colorText: Colors.white,
                                         backgroundColor: Colors.grey,
-                                        duration: const Duration(seconds: 1)
+                                        duration: const Duration(seconds: 2)
                                       );
                                     },
                                   );
@@ -212,16 +212,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                   'Os pedidos foram buscados!',
                                   colorText: Colors.white,
                                   backgroundColor: Colors.green,
-                                  duration: const Duration(seconds: 1)
+                                  duration: const Duration(seconds: 2)
                                 );
                               },
                               onError: (e){
                                 Get.snackbar(
-                                  e.code,
+                                  'Nada por hoje',
                                   'Não há pedidos para está data',
                                   colorText: Colors.white,
                                   backgroundColor: Colors.grey,
-                                  duration: const Duration(seconds: 1)
+                                  duration: const Duration(seconds: 2)
                                 );
                               },
                             );

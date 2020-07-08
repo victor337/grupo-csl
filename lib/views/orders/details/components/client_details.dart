@@ -73,7 +73,7 @@ class ClientDetails extends StatelessWidget {
             ),
             const SizedBox(height: 5,),
             Text(
-              'Horário: ${orderService.hour}',
+              'Horário: ${orderService.hour.substring(0, 5)}',
             ),
           ],
         ),

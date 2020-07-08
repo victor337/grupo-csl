@@ -29,6 +29,7 @@ class ButtonOptions extends StatelessWidget {
                     Get.snackbar(
                       'Erro',
                       e.title,
+                      colorText: Colors.white,
                       backgroundColor: Colors.red
                     );
                   },
@@ -36,7 +37,8 @@ class ButtonOptions extends StatelessWidget {
                     Get.snackbar(
                       'Sucesso',
                       'Status alterado!',
-                      backgroundColor: Colors.green
+                      colorText: Colors.white,
+                      backgroundColor: Colors.green,
                     );
                   },
                   index: index

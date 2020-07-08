@@ -45,33 +45,6 @@ class DetailOrderScreen extends StatelessWidget {
             CheckoutCard(orderService),
             const SizedBox(height: 10,),
             ButtonOptions(orderService, index),
-            RaisedButton(
-              onPressed: (){
-                launch(
-                  'https://www.google.com/maps/place/${orderService.street}-'
-                  '${orderService.city}'
-                );
-              },
-              child: const Text('Abrir no Maps'),
-            ),
-            RaisedButton(
-              onPressed: (){
-                Get.to(SignatureScreen());
-              },
-              child: const Text('Abrir canvas'),
-            ),
-            RaisedButton(
-              onPressed: (){
-                Get.to(PaymentScreen(orderService));
-              },
-              child: const Text('Abrir pagamento'),
-            ),
-            RaisedButton(
-              onPressed: (){
-                Get.to(PhotoBeforeScreen());
-              },
-              child: const Text('Fotos antes'),
-            ),
           ],
         ),
       ),

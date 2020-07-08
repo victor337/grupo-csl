@@ -82,9 +82,9 @@ class UserController extends GetxController {
       }
     );
     final responseData = json.decode(response.body);
-    if(responseData["errors"] == null){
+    if(!responseData.toString().contains("errors")){
       orders.removeAt(index);
-      orders.insert(index, OrderService.fromMap(responseData as Map<String, dynamic>));
+      orders.insert(index, OrderService.fromMap(responseData[0] as Map<String, dynamic>));
       onSucess();
       update();
     } else{

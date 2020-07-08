@@ -146,16 +146,16 @@ class LoginScreen extends StatelessWidget {
                                     'Os pedidos foram buscados!',
                                     colorText: Colors.white,
                                     backgroundColor: Colors.green,
-                                    duration: const Duration(seconds: 1)
+                                    duration: const Duration(seconds: 2)
                                   );
                                 },
                                 onError: (e){
                                   Get.snackbar(
-                                    e.code,
+                                    'Nada por hoje',
                                     'Não há pedidos para está data',
                                     colorText: Colors.white,
                                     backgroundColor: Colors.grey,
-                                    duration: const Duration(seconds: 1)
+                                    duration: const Duration(seconds: 2)
                                   );
                                 },
                                 onSucess: (){

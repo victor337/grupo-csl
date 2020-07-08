@@ -91,6 +91,7 @@ class AddTileWidget extends StatelessWidget {
                             Get.snackbar(
                               'Erro',
                               'Não foi possível salvar a imagem',
+                              colorText: Colors.white,
                               backgroundColor: Colors.red
                             );
                           }
