@@ -12,11 +12,11 @@ class OrderOption extends StatelessWidget {
 
     Color setColor(int status){
       if(status == 0) {
-        return Colors.green;
-      } else if(status == 1){
-        return Colors.yellow;
-      } else{
         return Colors.red;
+      } else if(status == 1){
+        return Colors.green;
+      } else{
+        return Colors.yellow;
       }
     }
 

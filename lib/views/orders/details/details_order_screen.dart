@@ -41,10 +41,16 @@ class DetailOrderScreen extends StatelessWidget {
             ClientDetails(orderService),
             const SizedBox(height: 10,),
             CheckoutCard(orderService),
+            Row(
+              children: <Widget>[
+                
+              ],
+            ),
             RaisedButton(
               onPressed: (){
                 launch(
-                  'https://www.google.com/maps/place/${orderService.adress}'
+                  'https://www.google.com/maps/place/${orderService.street}-'
+                  '${orderService.city}'
                 );
               },
               child: const Text('Abrir no Maps'),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class ClientDetails extends StatelessWidget {
@@ -34,8 +35,24 @@ class ClientDetails extends StatelessWidget {
               'Celular: ${orderService.clientCel}',
             ),
             const SizedBox(height: 5,),
-            Text(
-              'Endereço: ${orderService.adress},'
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  'Endereço: ${orderService.adress},'
+                ),
+                FlatButton(
+                  onPressed: (){
+                    launch(
+                      'https://www.google.com/maps/place/${orderService.street}-'
+                      '${orderService.city}'
+                    );
+                  },
+                  child: const Text(
+                    'Ver no mapa',
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 5,),
             Text(
