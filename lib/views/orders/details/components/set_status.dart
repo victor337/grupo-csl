@@ -24,7 +24,9 @@ class SetStatus {
       return 'Procedimento de saida e limpeza do ambiente.';
     } else if(status == 10){
       return 'Fechar OS';
-    } else {
+    } else if(status == 11){
+      return 'Fechado';
+    }else {
       return null;
     }
 

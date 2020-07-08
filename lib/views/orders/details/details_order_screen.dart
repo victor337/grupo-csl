@@ -37,7 +37,7 @@ class DetailOrderScreen extends StatelessWidget {
             const SizedBox(height: 10,),
             CheckoutCard(orderService),
             const SizedBox(height: 10,),
-            ButtonOptions(orderService, index),
+            ButtonOptions(orderService, index,),
           ],
         ),
       ),

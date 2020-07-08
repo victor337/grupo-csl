@@ -11,7 +11,7 @@ class ButtonOptions extends StatelessWidget {
 
   final int index;
   final OrderService orderService;
-  const ButtonOptions(this.orderService, this.index);
+  const ButtonOptions(this.orderService, this.index,);
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +78,19 @@ class ButtonOptions extends StatelessWidget {
               },
             ),
             GetBuilder<StatusController>(
+              init: StatusController(),
               builder: (statusController){
                 return ButtonStatus(
                   onPressed: (status){
-                    
                     userController.setStatusOrder(
+                      onOrders: (){
+                        Get.snackbar(
+                          'Atualizados',
+                          'Pedidos atualizados!',
+                          colorText: Colors.white,
+                          backgroundColor: Colors.green,
+                        );
+                      },
                       token: userController.user.token,
                       os: orderService.id,
                       status: (int.parse(orderService.statusAttendance??statusController.status) + 1).toString(),
@@ -95,8 +103,6 @@ class ButtonOptions extends StatelessWidget {
                         );
                       },
                       onSucess: (){
-                        statusController.setStatus(
-                          (int.parse(orderService.statusAttendance??statusController.status) + 1).toString());
                         Get.snackbar(
                           'Sucesso',
                           'Status alterado!',
@@ -104,7 +110,7 @@ class ButtonOptions extends StatelessWidget {
                           backgroundColor: Colors.green,
                         );
                       },
-                      index: index
+                      setStatusOdersAtten: statusController.setStatus
                     );
                   },
                   onAction: (){},

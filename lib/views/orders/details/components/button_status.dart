@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:grupocsl/controllers/user/user_controller.dart';
 import 'package:grupocsl/views/orders/details/components/set_status.dart';
 
 
@@ -18,18 +20,22 @@ class ButtonStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      color: const Color(0xff48c2e7),
-      onPressed: (){
-        onPressed(setStatus+1);
+    return GetBuilder<UserController>(
+      builder: (userController){
+        return RaisedButton(
+          color: const Color(0xff48c2e7),
+          onPressed: (){
+            onPressed(setStatus+1);
+          },
+          child: Text(
+            setStatusFunc.setStatusAtt(setStatus+1),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        );
       },
-      child: Text(
-        setStatusFunc.setStatusAtt(setStatus+1),
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-      ),
     );
   }
 }

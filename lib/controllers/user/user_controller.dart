@@ -71,7 +71,8 @@ class UserController extends GetxController {
     @required String status,
     @required Function(Error) onFail,
     @required Function onSucess,
-    @required int index,
+    @required Function onOrders,
+    @required Function(String) setStatusOdersAtten
   })async{
     final response = await http.post(
       urlStatus,
@@ -83,9 +84,9 @@ class UserController extends GetxController {
     );
     final responseData = json.decode(response.body);
     if(!responseData.toString().contains("errors")){
-      orders.removeAt(index);
-      orders.insert(index, OrderService.fromMap(responseData[0] as Map<String, dynamic>));
+      findOrders(user: user, onError: onFail, onSucess: onOrders);
       onSucess();
+      setStatusOdersAtten(responseData[0]['statusAtendimento'] as String);
       update();
     } else{
       onFail(Error.fromMap(responseData as Map<String, dynamic>));

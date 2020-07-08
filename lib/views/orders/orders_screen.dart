@@ -249,7 +249,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                         ),
                                         Text(
                                           userController.filter,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold
                                           )
