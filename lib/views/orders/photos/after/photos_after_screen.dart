@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:grupocsl/controllers/orders/photos_before_controller.dart';
-import 'package:grupocsl/views/orders/photos/before/components/add_tile_before_widget.dart';
-import 'package:grupocsl/views/orders/photos/before/components/list_before_images.dart';
+import 'package:grupocsl/controllers/orders/photos_after_controller.dart';
+import 'package:grupocsl/views/orders/photos/after/components/add_tile_after_widget.dart';
+import 'package:grupocsl/views/orders/photos/after/components/list_after_images.dart';
 
 
-class PhotoBeforeScreen extends StatelessWidget {
+
+class PhotoAfterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PhotoBeforeController>(
-      init: PhotoBeforeController(),
-      builder: (photoBeforeController){
+    return GetBuilder<PhotoAfterController>(
+      init: PhotoAfterController(),
+      builder: (photoAfterController){
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: (){
-                if(photoBeforeController.images.isEmpty){
+                if(photoAfterController.images.isEmpty){
                   Get.dialog(
                     AlertDialog(
                       title: const Text('Aviso'),
@@ -70,7 +71,7 @@ class PhotoBeforeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             child: WillPopScope(
               onWillPop: (){
-                if(photoBeforeController.images.isEmpty){
+                if(photoAfterController.images.isEmpty){
                   return Get.dialog(
                     AlertDialog(
                       title: const Text('Aviso'),
@@ -117,10 +118,10 @@ class PhotoBeforeScreen extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 crossAxisCount: 4,
-                itemCount: photoBeforeController.images.length + 1,
+                itemCount: photoAfterController.images.length + 1,
                 itemBuilder: (ctx, index){
-                  if(index < photoBeforeController.images.length){
-                    return ListImages(photoBeforeController.images[index], index);
+                  if(index < photoAfterController.images.length){
+                    return ListImages(photoAfterController.images[index], index);
                   } else{
                     return AddTileWidget();
                   }

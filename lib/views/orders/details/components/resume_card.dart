@@ -15,6 +15,17 @@ class ResumeCard extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
+    String setPayment(String nume){
+      if(nume == '0'){
+        return 'Em aberto';
+      } else if(nume == '1'){
+        return 'Paga';
+      } else{
+        return 'Nulo, confirme com um superior';
+      }
+    }
+
     return Card(
       color: Colors.white,
       child: Container(
@@ -42,7 +53,7 @@ class ResumeCard extends StatelessWidget {
             ),
             const SizedBox(height: 5,),
             Text(
-              'Pago: ${orderService.statusDesc}',
+              'Pago: ${setPayment(orderService.payment)}',
             ),
             const SizedBox(height: 5,),
             Text(

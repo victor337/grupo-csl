@@ -34,7 +34,7 @@ class ListImages extends StatelessWidget {
                       photoBeforeController.removerImage(index);
                       Navigator.of(context).pop();
                     },
-                    child: Text(
+                    child: const Text(
                       'Remover',
                       style: TextStyle(
                         color: Colors.red

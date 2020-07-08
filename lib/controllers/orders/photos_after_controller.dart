@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 
-class PhotoBeforeController extends GetxController {
+class PhotoAfterController extends GetxController {
 
   List<String> images = [];
 

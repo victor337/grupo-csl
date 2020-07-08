@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:grupocsl/controllers/orders/photos_after_controller.dart';
 import 'package:grupocsl/controllers/orders/photos_before_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,9 +12,22 @@ import 'package:permission_handler/permission_handler.dart';
 class AddTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PhotoBeforeController>(
-      init: PhotoBeforeController(),
-      builder: (photoBeforeScreen){
+    return GetBuilder<PhotoAfterController>(
+      builder: (photoAfterController){
+        Future<void> saveImage(PickedFile pickedFile)async{
+          final File file = File(pickedFile.path);
+            final bool sucess = await GallerySaver.saveImage(file.path);
+            if(sucess){
+              photoAfterController.addImage(file.path);
+            } else {
+              Get.snackbar(
+                'Erro',
+                'Não foi possível salvar a imagem',
+                colorText: Colors.white,
+                backgroundColor: Colors.red
+              );
+            }
+        }
         return GestureDetector(
           onTap: (){
             Get.bottomSheet(
@@ -62,40 +76,32 @@ class AddTileWidget extends StatelessWidget {
                           Navigator.of(context).pop();
                           final picker = ImagePicker();
 
-                          final PickedFile pickedFile = 
-                          await picker.getImage(source: ImageSource.camera);
-                          if(pickedFile == null){
-                            showDialog(
-                              context: context,
-                              child: AlertDialog(
-                                content: const Text(
-                                  'Nenhuma imagem selecionada'
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    onPressed: (){
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Ok'),
+                          try {
+                            final PickedFile pickedFile = 
+                            await picker.getImage(source: ImageSource.camera);
+                            if(pickedFile == null){
+                              showDialog(
+                                context: context,
+                                child: AlertDialog(
+                                  content: const Text(
+                                    'Nenhuma imagem selecionada'
                                   ),
-                                ],
-                              )
-                            );
-                            return;
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      onPressed: (){
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                )
+                              );
+                              return;
+                            }
+                            saveImage(pickedFile);
+                          } catch (e) {
+                             print('aaaaaaaaaaaaa $e');
                           }
-                          final File file = File(pickedFile.path);
-                          final bool sucess = await GallerySaver.saveImage(file.path);
-                          if(sucess){
-                            photoBeforeScreen.addImage(file.path);
-                          } else {
-                            Get.snackbar(
-                              'Erro',
-                              'Não foi possível salvar a imagem',
-                              colorText: Colors.white,
-                              backgroundColor: Colors.red
-                            );
-                          }
-                          
                         }
                       },
                     ),
@@ -158,12 +164,7 @@ class AddTileWidget extends StatelessWidget {
                             );
                             return;
                           }
-                          final bool sucess = await GallerySaver.saveImage(pickedFile.path);
-                          if(sucess){
-                            photoBeforeScreen.addImage(pickedFile.path);
-                          } else {
-                            //TODO: ARRUMAR AQUI
-                          }
+                          saveImage(pickedFile);
                         }
                       },
                     ),

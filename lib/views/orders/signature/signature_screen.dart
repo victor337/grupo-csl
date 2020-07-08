@@ -42,18 +42,12 @@ class _SignatureScreenState extends State<SignatureScreen> {
       return showDialog(
         context: context,
         child: AlertDialog(
-          title: const Text('Cancelado'),
-          content: const Text('Operação cancelada, você voltará para a tela anterior'),
+          title: const Text('Aviso'),
+          content: const Text('Você não pode voltar!'),
           actions: <Widget>[
             FlatButton(
               onPressed: (){
-                Navigator.of(context).pop();
-                SystemChrome.setPreferredOrientations([
-                  DeviceOrientation.portraitUp,
-                  DeviceOrientation.portraitDown,
-                ]);
-                Navigator.of(context).pop();
-                
+                Navigator.of(context).pop();                
               },
               child: const Text('Ok'),
             )
@@ -105,29 +99,38 @@ class _SignatureScreenState extends State<SignatureScreen> {
                             screenshotController.capture().then((image){
                               try {
                                 GallerySaver.saveImage(image.path);
-                                Get.bottomSheet(
-                                  BottomSheet(
-                                    onClosing: (){
-                                      Get.back();
-                                    },
-                                    builder: (ctx){
-                                      return Container(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: const<Widget>[
-                                            Text('Salvo na galeria'),
-                                            Text(
-                                              'Você será redirecionado para a tela anterior',
-                                              style: TextStyle(
-                                                fontSize: 22
-                                              ),
+                                Get.dialog(
+                                  AlertDialog(
+                                    content: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: const<Widget>[
+                                          Text('Salvo na galeria'),
+                                          Text(
+                                            'Você será redirecionado para a tela anterior',
+                                            style: TextStyle(
+                                              fontSize: 22
                                             ),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                  )
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        onPressed: (){
+                                          Navigator.of(context).pop();
+                                          SystemChrome.setPreferredOrientations([
+                                            DeviceOrientation.portraitUp,
+                                            DeviceOrientation.portraitDown,
+                                          ]);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Ok'),
+                                      ),
+                                    ],
+                                  ),
+                                  barrierDismissible: false
                                 );
                               } catch (e) {
                                 Get.dialog(

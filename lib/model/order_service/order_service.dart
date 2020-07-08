@@ -18,6 +18,7 @@ class OrderService {
   List<Services> services = [];
   String value;
   String numInstallments;
+  String payment;
   String typePayment;
   String dateOrder;
   String hour;
@@ -45,6 +46,7 @@ class OrderService {
     }
     value = data["valor"] as String;
     numInstallments = data["numParcelas"] as String;
+    payment = data["pagamento"] as String;
     typePayment = data["tipoPagamento"] as String;
     dateOrder = data["dataPedido"] as String;
     hour = data["horario"] as String;

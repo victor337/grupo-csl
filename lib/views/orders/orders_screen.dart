@@ -282,7 +282,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                       );
                                     } return Container();
                                   }
-                          ),
+                                ),
                               ),
                             ],
                           ) :

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/bindings/auth_binding.dart';
-import 'package:grupocsl/bindings/photos_before_bindings.dart';
+import 'package:grupocsl/bindings/photos_before.dart';
 import 'package:grupocsl/views/base/base_screen.dart';
 import 'package:grupocsl/views/login/login_screen.dart';
+import 'package:grupocsl/bindings/photos_after.dart';
 import 'package:grupocsl/views/splash/splash_screen.dart';
 
 
@@ -30,7 +31,8 @@ void main() {
           page: () => BaseScreen(),
           transition: Transition.rightToLeft,
           bindings: [
-            PhotoBeforeBindings(),
+            PhotosAfter(),
+            PhotoBefore(),
             AuthBinding(),
           ],
           transitionDuration: const Duration(milliseconds: 80)
