@@ -5,6 +5,9 @@ class OrderService {
 
   String id;
   String adress;
+  String street;
+  String city;
+  String uf;
   String paymentForm;
   String descripton;
   String observation;
@@ -27,6 +30,9 @@ class OrderService {
   OrderService.fromMap(Map<String, dynamic> data){
     id = data["id"] as String;
     adress = data["endereco"] as String;
+    street = data["rua"] as String;
+    city = data["cidade"] as String;
+    uf = data["uf"] as String;
     paymentForm = data["formaPagamento"] as String;
     descripton = data["descricao"] as String;
     observation = data["observacao"] as String;
