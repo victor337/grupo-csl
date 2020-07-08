@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/controllers/orders/message_controller.dart';
-import 'package:grupocsl/controllers/orders/status_controller.dart';
 import 'package:grupocsl/controllers/user/user_controller.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
 import 'package:grupocsl/views/orders/details/components/button_status.dart';
+import 'package:grupocsl/views/orders/payment/payment_screen.dart';
+import 'package:grupocsl/views/orders/photos/before/photos_before_screen.dart';
+import 'package:grupocsl/views/orders/signature/signature_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 
 class ButtonOptions extends StatelessWidget {
@@ -77,46 +81,73 @@ class ButtonOptions extends StatelessWidget {
                 );
               },
             ),
-            GetBuilder<StatusController>(
-              init: StatusController(),
-              builder: (statusController){
-                return ButtonStatus(
-                  onPressed: (status){
-                    userController.setStatusOrder(
-                      onOrders: (){
-                        Get.snackbar(
-                          'Atualizados',
-                          'Pedidos atualizados!',
-                          colorText: Colors.white,
-                          backgroundColor: Colors.green,
-                        );
-                      },
-                      token: userController.user.token,
-                      os: orderService.id,
-                      status: (int.parse(orderService.statusAttendance??statusController.status) + 1).toString(),
-                      onFail: (e){
-                        Get.snackbar(
-                          'Erro',
-                          e.title,
-                          colorText: Colors.white,
-                          backgroundColor: Colors.red
-                        );
-                      },
-                      onSucess: (){
-                        Get.snackbar(
-                          'Sucesso',
-                          'Status alterado!',
-                          colorText: Colors.white,
-                          backgroundColor: Colors.green,
-                        );
-                      },
-                      setStatusOdersAtten: statusController.setStatus
-                    );
-                  },
-                  onAction: (){},
-                  setStatus: int.parse(statusController.status??orderService.statusAttendance)
-                );
+            ButtonStatus(
+              onPressed: (){
+                if(int.parse(orderService.statusAttendance) != 10){
+                  userController.setStatusOrder(
+                    onOrders: (){
+                      Get.snackbar(
+                        'Atualizados',
+                        'Pedidos atualizados!',
+                        colorText: Colors.white,
+                        backgroundColor: Colors.green,
+                      );
+                    },
+                    token: userController.user.token,
+                    os: orderService.id,
+                    index: index,
+                    status: (int.parse(orderService.statusAttendance) + 1).toString(),
+                    onFail: (e){
+                      Get.snackbar(
+                        'Erro',
+                        e.title,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red
+                      );
+                    },
+                    onSucess: (){
+                      Get.snackbar(
+                        'Sucesso',
+                        'Status alterado!',
+                        colorText: Colors.white,
+                        backgroundColor: Colors.green,
+                      );
+                    },
+                  );
+                } else {
+                  Get.dialog(
+                    AlertDialog(
+                      title: const Text('Aviso'),
+                      content: const Text(
+                        'Está OS já está fechada, não é possívvel fazxer alterações'
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: (){
+                            Get.back();
+                          },
+                          child: const Text('Ok'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
               },
+              onAction: (){
+                if(int.parse(orderService.statusAttendance) == 1){
+                  launch('https://www.google.com/maps/place/${orderService.street}-'
+                  '${orderService.city}');
+                } else if (int.parse(orderService.statusAttendance) == 3){
+                  Get.to(PhotoBeforeScreen());
+                } else if (int.parse(orderService.statusAttendance) == 5){
+                  //TODO: 
+                } else if(int.parse(orderService.statusAttendance) == 6){
+                  Get.to(SignatureScreen());
+                } else if(int.parse(orderService.statusAttendance) == 7){
+                  Get.to(PaymentScreen(orderService));
+                }
+              },
+              setStatus: int.parse(userController.orders[index].statusAttendance)
             ),
           ],
         );

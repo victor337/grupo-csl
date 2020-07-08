@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grupocsl/controllers/orders/status_controller.dart';
+import 'package:grupocsl/controllers/user/user_controller.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
 import 'package:grupocsl/views/orders/details/components/set_status.dart';
 
@@ -8,7 +8,8 @@ import 'package:grupocsl/views/orders/details/components/set_status.dart';
 class ResumeCard extends StatelessWidget {
 
   final OrderService orderService;
-  ResumeCard(this.orderService);
+  final int index;
+  ResumeCard(this.orderService, this.index);
 
   final SetStatus setStatus = SetStatus();
   
@@ -31,11 +32,11 @@ class ResumeCard extends StatelessWidget {
               'Ordem de Serviço: ${orderService.id}',
             ),
             const SizedBox(height: 5,),
-            GetBuilder<StatusController>(
-              init: StatusController(),
-              builder: (statusController){
+            GetBuilder<UserController>(
+              init: UserController(),
+              builder: (userController){
                 return Text(
-                  'Status: ${setStatus.setStatusAtt(int.parse(statusController.status??orderService.statusAttendance))}',
+                  'Status: ${setStatus.setStatusAtt(int.parse(userController.orders[index].statusAttendance))}',
                 );
               },
             ),

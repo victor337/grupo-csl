@@ -31,7 +31,7 @@ class DetailOrderScreen extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         child: ListView(
           children: <Widget>[
-            ResumeCard(orderService),
+            ResumeCard(orderService, index),
             const SizedBox(height: 10,),
             ClientDetails(orderService),
             const SizedBox(height: 10,),

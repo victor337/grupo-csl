@@ -65,14 +65,17 @@ class UserController extends GetxController {
   //   }
   // }
 
+
+  
+
   Future<void> setStatusOrder({
     @required String token,
     @required String os,
+    @required int index,
     @required String status,
     @required Function(Error) onFail,
     @required Function onSucess,
     @required Function onOrders,
-    @required Function(String) setStatusOdersAtten
   })async{
     final response = await http.post(
       urlStatus,
@@ -84,9 +87,8 @@ class UserController extends GetxController {
     );
     final responseData = json.decode(response.body);
     if(!responseData.toString().contains("errors")){
-      findOrders(user: user, onError: onFail, onSucess: onOrders);
+      setOrderStatusInList(index, responseData[0]['statusAtendimento'] as String);
       onSucess();
-      setStatusOdersAtten(responseData[0]['statusAtendimento'] as String);
       update();
     } else{
       onFail(Error.fromMap(responseData as Map<String, dynamic>));
@@ -110,6 +112,11 @@ class UserController extends GetxController {
     filter = setFilter;
     ordersFilter.clear();
     ordersFilter.addAll(orders.where((e) => e.id.contains(filter)));
+    update();
+  }
+
+  void setOrderStatusInList(int index, String seStatus){
+    orders[index].statusAttendance = seStatus;
     update();
   }
 

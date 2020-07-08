@@ -6,7 +6,7 @@ import 'package:grupocsl/views/orders/details/components/set_status.dart';
 
 class ButtonStatus extends StatelessWidget {
 
-  final Function(int) onPressed;
+  final VoidCallback onPressed;
   final Function onAction;
   final int setStatus;
 
@@ -25,7 +25,8 @@ class ButtonStatus extends StatelessWidget {
         return RaisedButton(
           color: const Color(0xff48c2e7),
           onPressed: (){
-            onPressed(setStatus+1);
+            onAction();
+            onPressed();
           },
           child: Text(
             setStatusFunc.setStatusAtt(setStatus+1),
