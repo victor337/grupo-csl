@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:grupocsl/model/errors/errors_model.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
 import 'package:grupocsl/model/user/user_model.dart';
+import 'package:grupocsl/repository/api.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -13,7 +14,9 @@ class UserController extends GetxController {
 
   bool isLoading = false;
 
-  final String urlAuth = 'https://sisteste.carroesofalimpo.com.br/api/autentica.php';
+  final String urlAuth = '$urlBase/api/autentica.php';
+  final String urlList = '$urlBase/api/listaOS.php';
+  final String urlStatus = '$urlBase/api/atualizaOS.php';
 
   UserModel user;
   
@@ -62,14 +65,40 @@ class UserController extends GetxController {
   //   }
   // }
 
+  Future<void> setStatusOrder({
+    @required String token,
+    @required String os,
+    @required String status,
+    @required Function(Error) onFail,
+    @required Function onSucess,
+    @required int index,
+  })async{
+    final response = await http.post(
+      urlStatus,
+      body: {
+        'token': token,
+        'os': os,
+        'statusAtendimento': status
+      }
+    );
+    final responseData = json.decode(response.body);
+    if(responseData["errors"] == null){
+      orders.removeAt(index);
+      orders.insert(index, OrderService.fromMap(responseData as Map<String, dynamic>));
+      onSucess();
+      update();
+    } else{
+      onFail(Error.fromMap(responseData as Map<String, dynamic>));
+      update();
+    }
+  }
+
   String date = '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}';
   String dateFormated =
     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
 
   DateTime dateNotFormated = DateTime(DateTime.now().year,
   DateTime.now().month,DateTime.now().day,);
-
-  final String urlList = 'https://sisteste.carroesofalimpo.com.br/api/listaOS.php';
 
   List<OrderService> orders = [];
 
@@ -86,6 +115,8 @@ class UserController extends GetxController {
 
   Future<void> findOrders({
     @required UserModel user,
+    @required Function(Error) onError,
+    @required Function onSucess
   }) async{
 
     isLoading = true;
@@ -98,16 +129,19 @@ class UserController extends GetxController {
       }
     );
     final responseData = json.decode(response.body);
-    if(responseData != null){
-      
+    if(!responseData.toString().contains("errors")){
       orders.clear();
       for(final map in responseData){
         orders.add(OrderService.fromMap(map as Map<String, dynamic>));
       }
       isLoading = false;
+      onSucess();
       update();
-    }else{
+    }
+    else {
+      orders.clear();
       isLoading = false;
+      onError(Error.fromMap(responseData as Map<String, dynamic>)).toString();
       update();
     }
   }
@@ -126,6 +160,8 @@ class UserController extends GetxController {
     @required Function onSucess,
     @required Function(String) onFail,
     @required Function(Error) authFail,
+    @required Function(Error) onError,
+    @required Function ordersSucess
   })async{
 
     isLoading = true;
@@ -137,7 +173,11 @@ class UserController extends GetxController {
       user = UserModel.fromMap(responseData as Map<String, dynamic>);
       if(user.nome != null){
         isLoading = false;
-        findOrders(user: user);
+        findOrders(
+          user: user,
+          onSucess: ordersSucess,
+          onError: onError,
+        );
         onSucess();
         update();
       }else{
@@ -152,5 +192,7 @@ class UserController extends GetxController {
       update();
     }
   }
+
+
 
 }

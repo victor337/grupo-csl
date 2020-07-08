@@ -10,6 +10,14 @@ class ClientDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String setDate(String date){
+      final String year = date.substring(0, 4);
+      final String month = date.substring(6, 7);
+      final String day = date.substring(9, 10);
+      return '$day/$month/$year';
+    }
+
     return Card(
       color: Colors.white,
       child: Container(
@@ -38,8 +46,10 @@ class ClientDetails extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  'Endereço: ${orderService.adress},'
+                Expanded(
+                  child: Text(
+                    'Endereço: ${orderService.adress},'
+                  ),
                 ),
                 FlatButton(
                   onPressed: (){
@@ -50,13 +60,16 @@ class ClientDetails extends StatelessWidget {
                   },
                   child: const Text(
                     'Ver no mapa',
+                    style: TextStyle(
+                      color: Colors.blue
+                    ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 5,),
             Text(
-              'Data do Pedido: ${orderService.dateOrder}',
+              'Data do Pedido: ${setDate(orderService.dateOrder)}',
             ),
             const SizedBox(height: 5,),
             Text(

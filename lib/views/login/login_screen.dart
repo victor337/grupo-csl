@@ -140,6 +140,24 @@ class LoginScreen extends StatelessWidget {
                               userController.login(
                                 login: loginController.login,
                                 pass: loginController.pass,
+                                ordersSucess: (){
+                                  Get.snackbar(
+                                    'Atualizado',
+                                    'Os pedidos foram buscados!',
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.green,
+                                    duration: const Duration(seconds: 1)
+                                  );
+                                },
+                                onError: (e){
+                                  Get.snackbar(
+                                    e.code,
+                                    'Não há pedidos para está data',
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.grey,
+                                    duration: const Duration(seconds: 1)
+                                  );
+                                },
                                 onSucess: (){
                                   Get.offAllNamed('/base');
                                   Get.snackbar(

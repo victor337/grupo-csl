@@ -134,7 +134,25 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                   userController.setDate(date);
                                   userController.setFilter('');
                                   userController.findOrders(
-                                    user: userController.user
+                                    user: userController.user,
+                                    onSucess: (){
+                                      Get.snackbar(
+                                        'Atualizado',
+                                        'Os pedidos foram buscados!',
+                                        colorText: Colors.white,
+                                        backgroundColor: Colors.green,
+                                        duration: const Duration(seconds: 1)
+                                      );
+                                    },
+                                    onError: (e){
+                                      Get.snackbar(
+                                        e.code,
+                                        'Não há pedidos para está data',
+                                        colorText: Colors.white,
+                                        backgroundColor: Colors.grey,
+                                        duration: const Duration(seconds: 1)
+                                      );
+                                    },
                                   );
                                 }
                               });
@@ -187,7 +205,25 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           showChildOpacityTransition: false,
                           onRefresh: ()async{
                             userController.findOrders(
-                              user: userController.user
+                              user: userController.user,
+                              onSucess: (){
+                                Get.snackbar(
+                                  'Atualizado',
+                                  'Os pedidos foram buscados!',
+                                  colorText: Colors.white,
+                                  backgroundColor: Colors.green,
+                                  duration: const Duration(seconds: 1)
+                                );
+                              },
+                              onError: (e){
+                                Get.snackbar(
+                                  e.code,
+                                  'Não há pedidos para está data',
+                                  colorText: Colors.white,
+                                  backgroundColor: Colors.grey,
+                                  duration: const Duration(seconds: 1)
+                                );
+                              },
                             );
                           },
                           child: userController.filter != null && 
@@ -239,7 +275,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                       return GestureDetector(
                                         onTap: (){
                                           Get.to(
-                                            DetailOrderScreen(userController.ordersFilter[index])
+                                            DetailOrderScreen(userController.ordersFilter[index], index)
                                           );
                                         },
                                         child: OrderOption(userController.ordersFilter[index])
@@ -259,7 +295,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 return GestureDetector(
                                   onTap: (){
                                     Get.to(
-                                      DetailOrderScreen(userController.orders[index])
+                                      DetailOrderScreen(userController.orders[index], index)
                                     );
                                   },
                                   child: OrderOption(userController.orders[index])

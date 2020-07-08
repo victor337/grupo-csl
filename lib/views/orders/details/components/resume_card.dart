@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
+import 'package:grupocsl/views/orders/details/components/set_status.dart';
 
 
 class ResumeCard extends StatelessWidget {
 
   final OrderService orderService;
-  const ResumeCard(this.orderService);
+  ResumeCard(this.orderService);
+
+  final SetStatus setStatus = SetStatus();
   
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class ResumeCard extends StatelessWidget {
             ),
             const SizedBox(height: 5,),
             Text(
-              'Status: ${orderService.statusAttendanceDesc}',
+              'Status: ${setStatus.setStatusAtt(int.parse(orderService.statusAttendance))}',
             ),
             const SizedBox(height: 5,),
             Text(

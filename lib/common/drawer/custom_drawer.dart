@@ -43,7 +43,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                     Text(
                       userController.user.franquia,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 18
                       ),
