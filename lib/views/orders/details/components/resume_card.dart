@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:grupocsl/controllers/orders/status_controller.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
 import 'package:grupocsl/views/orders/details/components/set_status.dart';
 
@@ -29,8 +31,13 @@ class ResumeCard extends StatelessWidget {
               'Ordem de Serviço: ${orderService.id}',
             ),
             const SizedBox(height: 5,),
-            Text(
-              'Status: ${setStatus.setStatusAtt(int.parse(orderService.statusAttendance))}',
+            GetBuilder<StatusController>(
+              init: StatusController(),
+              builder: (statusController){
+                return Text(
+                  'Status: ${setStatus.setStatusAtt(int.parse(statusController.status??orderService.statusAttendance))}',
+                );
+              },
             ),
             const SizedBox(height: 5,),
             Text(
