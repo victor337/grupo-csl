@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/controllers/orders/photos_after_controller.dart';
-import 'package:grupocsl/controllers/orders/photos_before_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -100,7 +99,7 @@ class AddTileWidget extends StatelessWidget {
                             }
                             saveImage(pickedFile);
                           } catch (e) {
-                             print('aaaaaaaaaaaaa $e');
+                             Get.snackbar('Erro', 'Não foi possível salvar a imagem');
                           }
                         }
                       },

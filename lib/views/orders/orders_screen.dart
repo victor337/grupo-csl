@@ -290,7 +290,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             itemCount: userController.orders.length,
                             itemBuilder: (ctx, index){
                               if(userController.orders[index].dateOrder
-                              == userController.dateNotFormated.toString().substring(0, 10)
+                              == '2020-07-08'
                               ){
                                 return GestureDetector(
                                   onTap: (){
