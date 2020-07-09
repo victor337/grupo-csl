@@ -72,7 +72,6 @@ class AddTileWidget extends StatelessWidget {
                             );
                             return;
                         } else {
-                          Navigator.of(context).pop();
                           final picker = ImagePicker();
 
                           final PickedFile pickedFile = 
@@ -141,7 +140,6 @@ class AddTileWidget extends StatelessWidget {
                           );
                           return;
                         } else {
-                          Navigator.of(context).pop();
                           final picker = ImagePicker();
 
                           final PickedFile pickedFile = 

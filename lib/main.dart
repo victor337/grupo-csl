@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/bindings/auth_binding.dart';
+import 'package:grupocsl/bindings/payment_binding.dart';
 import 'package:grupocsl/bindings/photos_before.dart';
 import 'package:grupocsl/views/base/base_screen.dart';
 import 'package:grupocsl/views/login/login_screen.dart';
@@ -34,6 +35,7 @@ void main() {
             PhotosAfter(),
             PhotoBefore(),
             AuthBinding(),
+            //PaymentBinding(),
           ],
           transitionDuration: const Duration(milliseconds: 80)
         ),

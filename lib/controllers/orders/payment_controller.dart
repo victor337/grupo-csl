@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grupocsl/model/errors/errors_model.dart';
 import 'package:grupocsl/repository/api.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,6 +23,25 @@ class PaymentController extends GetxController {
   void setValue(String setValue){
     value = setValue;
     update();
+  }
+
+  Map<String, dynamic> snapshot;
+
+  Future<void> verifypayment({
+    @required String token,
+    @required String os,
+  })async{
+    final response = await http.post(
+      '$urlBase/api/pagamentoOS.php',
+      body: {
+        'token': token,
+        'os': os,
+      }
+    );
+    final responseData = json.decode(response.body);
+    snapshot = responseData[0] as Map<String, dynamic>;
+    return responseData;
+
   }
 
   String setTypePayment(String type){
@@ -57,7 +77,6 @@ class PaymentController extends GetxController {
 
   void setDate(DateTime data){
     dateNotFormated = data;
-    print(dateNotFormated);
     final String dateFormated = '${data.day}/${data.month}/${data.year}';
     date = dateFormated;
     update();
@@ -69,14 +88,21 @@ class PaymentController extends GetxController {
   Future<void> sendPayment({
     @required String token,
     @required String os,
+    @required String idPay,
+    @required Function onSucess,
+    @required Function(String) onFail
   })async{
+
+    isLoading = true;
+    update();
+
     final response = await http.post(
       '$urlBase/api/pagamentoOS.php',
       body: {
         'token': token,
         'os': os,
-        'idPagamento': null,
         'dataPagamento': dateNotFormated.toString().substring(0, 10),
+        'idPagamento': idPay,
         'valor': value,
         'tipoPagamento': '1',
         'formaPagamento': setTypePayment(optionSelect),
@@ -84,7 +110,15 @@ class PaymentController extends GetxController {
     );
 
     final responseData = json.decode(response.body);
-    print(responseData);
+    if(!responseData.toString().contains("errors")){
+      isLoading = false;
+      onSucess();
+      update();
+    } else {
+      isLoading = false;
+      onFail(responseData['errors']['title'] as String);
+      update();
+    }
 
   }
 
