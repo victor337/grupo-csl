@@ -31,7 +31,7 @@ class AddTileWidget extends StatelessWidget {
                 os: os,
                 image: base64Image,
                 tipo: '2',
-                name: fileName,
+                name: '2 - $fileName',
                 onSucess: (){
                   Get.snackbar(
                     'Sucesso',

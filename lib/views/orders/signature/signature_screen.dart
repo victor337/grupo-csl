@@ -116,7 +116,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
                                       os: widget.os,
                                       image: base64Image,
                                       tipo: '3',
-                                      name: fileName,
+                                      name: '3 - $fileName',
                                       onSucess: (){
                                         Get.snackbar(
                                           'Sucesso',
