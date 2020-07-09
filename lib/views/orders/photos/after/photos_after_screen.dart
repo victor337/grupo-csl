@@ -8,6 +8,11 @@ import 'package:grupocsl/views/orders/photos/after/components/list_after_images.
 
 
 class PhotoAfterScreen extends StatelessWidget {
+
+  final String token;
+  final String os;
+
+  const PhotoAfterScreen(this.token, this.os);
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PhotoAfterController>(
@@ -123,7 +128,7 @@ class PhotoAfterScreen extends StatelessWidget {
                   if(index < photoAfterController.images.length){
                     return ListImages(photoAfterController.images[index], index);
                   } else{
-                    return AddTileWidget();
+                    return AddTileWidget(os, token);
                   }
                 },
                 staggeredTileBuilder: (index){

@@ -145,9 +145,9 @@ class ButtonOptions extends StatelessWidget {
                           launch('https://www.google.com/maps/place/${orderService.street}-'
                           '${orderService.city}');
                         } else if (int.parse(orderService.statusAttendance) == 3){
-                          Get.to(PhotoBeforeScreen());
+                          Get.to(PhotoBeforeScreen(orderService.id, userController.user.token));
                         } else if (int.parse(orderService.statusAttendance) == 5){
-                          Get.to(PhotoAfterScreen());
+                          Get.to(PhotoAfterScreen(orderService.id, userController.user.token));
                         } else if(int.parse(orderService.statusAttendance) == 6){
                           Get.to(SignatureScreen());
                         } else if(int.parse(orderService.statusAttendance) == 7){

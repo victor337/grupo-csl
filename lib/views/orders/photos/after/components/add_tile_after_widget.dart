@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
@@ -9,6 +9,12 @@ import 'package:permission_handler/permission_handler.dart';
 
 
 class AddTileWidget extends StatelessWidget {
+
+  final String os;
+  final String token;
+
+  const AddTileWidget(this.os, this.token,);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PhotoAfterController>(
@@ -17,6 +23,32 @@ class AddTileWidget extends StatelessWidget {
           final File file = File(pickedFile.path);
             final bool sucess = await GallerySaver.saveImage(file.path);
             if(sucess){
+              final File file = File(pickedFile.path);
+              final String base64Image = base64Encode(file.readAsBytesSync());
+              final String fileName = file.path.split("/").last;
+              photoAfterController.sendImage(
+                token: token,
+                os: os,
+                image: base64Image,
+                tipo: '2',
+                name: fileName,
+                onSucess: (){
+                  Get.snackbar(
+                    'Sucesso',
+                    'Foto enviada com sucesso',
+                    colorText: Colors.white,
+                    backgroundColor: Colors.green
+                  );
+                },
+                onFail: (e){
+                  Get.snackbar(
+                    'Falha',
+                    e,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red
+                  );
+                }
+              );
               photoAfterController.addImage(file.path);
             } else {
               Get.snackbar(
@@ -157,7 +189,7 @@ class AddTileWidget extends StatelessWidget {
                                     child: const Text('Ok'),
                                   ),
                                 ],
-                              )
+                              ),
                             );
                             return;
                           }

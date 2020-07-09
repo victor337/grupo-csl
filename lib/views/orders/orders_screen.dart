@@ -169,7 +169,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               init: UserController(),
               builder: (userController){
                 if(userController.isLoading){
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation(Colors.blue)
                     )

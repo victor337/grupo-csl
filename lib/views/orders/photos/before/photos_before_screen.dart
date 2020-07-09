@@ -7,6 +7,11 @@ import 'package:grupocsl/views/orders/photos/before/components/list_before_image
 
 
 class PhotoBeforeScreen extends StatelessWidget {
+
+  final String os;
+  final String token;
+  const PhotoBeforeScreen(this.os, this.token);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PhotoBeforeController>(
@@ -122,7 +127,7 @@ class PhotoBeforeScreen extends StatelessWidget {
                   if(index < photoBeforeController.images.length){
                     return ListImages(photoBeforeController.images[index], index);
                   } else{
-                    return AddTileWidget();
+                    return AddTileWidget(os, token);
                   }
                 },
                 staggeredTileBuilder: (index){

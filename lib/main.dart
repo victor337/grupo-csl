@@ -35,7 +35,7 @@ void main() {
             PhotosAfter(),
             PhotoBefore(),
             AuthBinding(),
-            //PaymentBinding(),
+            PaymentBinding(),
           ],
           transitionDuration: const Duration(milliseconds: 80)
         ),

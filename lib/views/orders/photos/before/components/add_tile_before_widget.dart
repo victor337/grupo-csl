@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,14 +10,43 @@ import 'package:permission_handler/permission_handler.dart';
 
 
 class AddTileWidget extends StatelessWidget {
+  final String os;
+  final String token;
+  const AddTileWidget(this.os, this.token);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PhotoBeforeController>(
       builder: (photoBeforeScreen){
         Future<void> saveImage(PickedFile pickedFile)async{
-          final File file = File(pickedFile.path);
-          final bool sucess = await GallerySaver.saveImage(file.path);
+          final bool sucess = await GallerySaver.saveImage(pickedFile.path);
           if(sucess){
+            final File file = File(pickedFile.path);
+            final String base64Image = base64Encode(file.readAsBytesSync());
+            final String fileName = file.path.split("/").last;
+            photoBeforeScreen.sendImage(
+              token: token,
+              os: os,
+              image: base64Image,
+              tipo: '1',
+              name: fileName,
+              onSucess: (){
+                Get.snackbar(
+                  'Sucesso',
+                  'Foto enviada com sucesso',
+                  colorText: Colors.white,
+                  backgroundColor: Colors.green
+                );
+              },
+              onFail: (e){
+                Get.snackbar(
+                  'Falha',
+                  e,
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red
+                );
+              }
+            );
             photoBeforeScreen.addImage(file.path);
           } else {
             Get.snackbar(
