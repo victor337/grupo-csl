@@ -29,16 +29,18 @@ class PaymentScreen extends StatelessWidget {
         }
 
         void snackBar(String title, String message, Color color){
-          Get.snackbar(title, message, backgroundColor: color, colorText: Colors.white);
+          Get.snackbar(
+            title,
+            message,
+            backgroundColor:color,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 2),
+          );
         }
 
         return Scaffold(
           appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: (){
-              }
-            ),
+            leading: Container(),
             elevation: 0,
             title: Text(
               'Pagamento OS ${orderService.id}',
