@@ -1,14 +1,21 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/constants/size_screen.dart';
+import 'package:grupocsl/controllers/orders/signature_controller_send.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:signature/signature.dart';
 
 
 class SignatureScreen extends StatefulWidget {
+
+  final String token;
+  final String os;
+  const SignatureScreen(this.os, this.token);
+
   @override
   _SignatureScreenState createState() => _SignatureScreenState();
 }
@@ -91,66 +98,96 @@ class _SignatureScreenState extends State<SignatureScreen> {
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: IconButton(
-                        icon: const Icon(Icons.check),
-                        color: Colors.white,
-                        onPressed: () async {
-                          if(_controller.isNotEmpty) {
-                            screenshotController.capture().then((image){
-                              try {
-                                GallerySaver.saveImage(image.path);
-                                Get.dialog(
-                                  AlertDialog(
-                                    content: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: const<Widget>[
-                                          Text('Salvo na galeria'),
-                                          Text(
-                                            'Você será redirecionado para a tela anterior',
-                                            style: TextStyle(
-                                              fontSize: 22
-                                            ),
+                      child: GetBuilder<SignatureControllerSend>(
+                        init: SignatureControllerSend(),
+                        builder: (singnatureControllerSend){
+                          return IconButton(
+                            icon: const Icon(Icons.check),
+                            color: Colors.white,
+                            onPressed: () async {
+                              if(_controller.isNotEmpty) {
+                                screenshotController.capture().then((image){
+                                  try {
+                                    final File file = File(image.path);
+                                    final String base64Image = base64Encode(file.readAsBytesSync());
+                                    final String fileName = file.path.split("/").last;
+                                    singnatureControllerSend.sendImage(
+                                      token: widget.token,
+                                      os: widget.os,
+                                      image: base64Image,
+                                      tipo: '2',
+                                      name: fileName,
+                                      onSucess: (){
+                                        Get.snackbar(
+                                          'Sucesso',
+                                          'Foto enviada com sucesso',
+                                          colorText: Colors.white,
+                                          backgroundColor: Colors.green
+                                        );
+                                      },
+                                      onFail: (e){
+                                        Get.snackbar(
+                                          'Falha',
+                                          e,
+                                          colorText: Colors.white,
+                                          backgroundColor: Colors.red
+                                        );
+                                      }
+                                    );
+                                    Get.dialog(
+                                      AlertDialog(
+                                        content: Container(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: const<Widget>[
+                                              Text('Enviando para o servidor'),
+                                              Text(
+                                                'Você será redirecionado para a tela anterior',
+                                                style: TextStyle(
+                                                  fontSize: 22
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            onPressed: (){
+                                              Navigator.of(context).pop();
+                                              SystemChrome.setPreferredOrientations([
+                                                DeviceOrientation.portraitUp,
+                                                DeviceOrientation.portraitDown,
+                                              ]);
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Ok'),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        onPressed: (){
-                                          Navigator.of(context).pop();
-                                          SystemChrome.setPreferredOrientations([
-                                            DeviceOrientation.portraitUp,
-                                            DeviceOrientation.portraitDown,
-                                          ]);
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  ),
-                                  barrierDismissible: false
-                                );
-                              } catch (e) {
-                                Get.dialog(
-                                  AlertDialog(
-                                    content: const Text('Erro ao salvar'),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        onPressed: (){
-                                          Get.back();
-                                        },
-                                        child: const Text('Ok')
+                                      barrierDismissible: false
+                                    );
+                                  } catch (e) {
+                                    Get.dialog(
+                                      AlertDialog(
+                                        content: const Text('Erro ao salvar'),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            onPressed: (){
+                                              Get.back();
+                                            },
+                                            child: const Text('Ok')
+                                          )
+                                        ],
                                       )
-                                    ],
-                                  )
-                                );
+                                    );
+                                  }
+                                });
                               }
-                            });
-                          }
+                            },
+                          );
                         },
-                      ),
+                      )
                     ),
                     //CLEAR CANVAS
                     Container(

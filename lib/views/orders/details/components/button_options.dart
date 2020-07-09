@@ -149,7 +149,7 @@ class ButtonOptions extends StatelessWidget {
                         } else if (int.parse(orderService.statusAttendance) == 5){
                           Get.to(PhotoAfterScreen(orderService.id, userController.user.token));
                         } else if(int.parse(orderService.statusAttendance) == 6){
-                          Get.to(SignatureScreen());
+                          Get.to(SignatureScreen(orderService.id, userController.user.token));
                         } else if(int.parse(orderService.statusAttendance) == 7){
                           Get.to(PaymentScreen(orderService));
                         } else if(int.parse(orderService.statusAttendance) == 10){
