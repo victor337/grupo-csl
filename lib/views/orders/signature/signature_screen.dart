@@ -153,9 +153,9 @@ class _SignatureScreenState extends State<SignatureScreen> {
                                         ),
                                         actions: <Widget>[
                                           FlatButton(
-                                            onPressed: (){
+                                            onPressed: ()async{
                                               Navigator.of(context).pop();
-                                              SystemChrome.setPreferredOrientations([
+                                              await SystemChrome.setPreferredOrientations([
                                                 DeviceOrientation.portraitUp,
                                                 DeviceOrientation.portraitDown,
                                               ]);

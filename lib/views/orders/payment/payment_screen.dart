@@ -132,7 +132,24 @@ class PaymentScreen extends StatelessWidget {
                           RaisedButton(
                             color: const Color(0xff48c2e7),
                             onPressed: (){
-                              Get.back();
+                              Get.dialog(
+                                AlertDialog(
+                                  content: const Text(
+                                    "Você será redirecionado para tela anterior"
+                                  ),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      onPressed: (){
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text(
+                                        'Ok'
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              );
                             },
                             child: const Text(
                               'Ok',

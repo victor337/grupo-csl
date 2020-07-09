@@ -21,44 +21,44 @@ class AddTileWidget extends StatelessWidget {
       builder: (photoAfterController){
         Future<void> saveImage(PickedFile pickedFile)async{
           final File file = File(pickedFile.path);
-            final bool sucess = await GallerySaver.saveImage(file.path);
-            if(sucess){
-              final File file = File(pickedFile.path);
-              final String base64Image = base64Encode(file.readAsBytesSync());
-              final String fileName = file.path.split("/").last;
-              photoAfterController.sendImage(
-                token: token,
-                os: os,
-                image: base64Image,
-                tipo: '2',
-                name: '2 - $fileName',
-                onSucess: (){
-                  Get.snackbar(
-                    'Sucesso',
-                    'Foto enviada com sucesso',
-                    colorText: Colors.white,
-                    backgroundColor: Colors.green
-                  );
-                },
-                onFail: (e){
-                  Get.snackbar(
-                    'Falha',
-                    e,
-                    colorText: Colors.white,
-                    backgroundColor: Colors.red
-                  );
-                }
-              );
-              photoAfterController.addImage(file.path);
-            } else {
-              Get.snackbar(
-                'Erro',
-                'Não foi possível salvar a imagem',
-                colorText: Colors.white,
-                backgroundColor: Colors.red
-              );
-            }
+          final bool sucess = await GallerySaver.saveImage(file.path);
+          if(sucess){
+            final String base64Image = base64Encode(file.readAsBytesSync());
+            final String fileName = file.path.split("/").last;
+            photoAfterController.sendImage(
+              token: token,
+              os: os,
+              image: base64Image,
+              tipo: '1',
+              name: '1 - $fileName',
+              onSucess: (){
+                Get.snackbar(
+                  'Sucesso',
+                  'Foto enviada com sucesso',
+                  colorText: Colors.white,
+                  backgroundColor: Colors.green
+                );
+              },
+              onFail: (e){
+                Get.snackbar(
+                  'Falha',
+                  e,
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red
+                );
+              }
+            );
+            photoAfterController.addImage(file.path);
+          } else {
+            Get.snackbar(
+              'Erro',
+              'Não foi possível salvar a imagem',
+              colorText: Colors.white,
+              backgroundColor: Colors.red
+            );
+          }
         }
+
         return GestureDetector(
           onTap: (){
             Get.bottomSheet(
@@ -128,6 +128,7 @@ class AddTileWidget extends StatelessWidget {
                               );
                               return;
                             }
+                            photoAfterController.addImage(pickedFile.path);
                             saveImage(pickedFile);
                           } catch (e) {
                              Get.snackbar('Erro', 'Não foi possível salvar a imagem');
@@ -171,29 +172,33 @@ class AddTileWidget extends StatelessWidget {
                           return;
                         } else {
                           final picker = ImagePicker();
-
-                          final PickedFile pickedFile = 
-                          await picker.getImage(source: ImageSource.gallery);
-                          if(pickedFile == null){
-                            showDialog(
-                              context: context,
-                              child: AlertDialog(
-                                content: const Text(
-                                  'Nenhuma imagem selecionada'
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    onPressed: (){
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Ok'),
+                          try {
+                            final PickedFile pickedFile = 
+                            await picker.getImage(source: ImageSource.gallery);
+                            if(pickedFile == null){
+                              showDialog(
+                                context: context,
+                                child: AlertDialog(
+                                  content: const Text(
+                                    'Nenhuma imagem selecionada'
                                   ),
-                                ],
-                              ),
-                            );
-                            return;
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      onPressed: (){
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                              return;
+                            }
+                            photoAfterController.addImage(pickedFile.path);
+                            saveImage(pickedFile);
+                          } catch (e) {
+                            Get.snackbar('Erro', 'Não foi possível salvar a imagem');
                           }
-                          saveImage(pickedFile);
                         }
                       },
                     ),

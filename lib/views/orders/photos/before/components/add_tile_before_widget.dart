@@ -17,11 +17,11 @@ class AddTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PhotoBeforeController>(
-      builder: (photoBeforeScreen){
+      builder: (photoBeforeScreen){        
         Future<void> saveImage(PickedFile pickedFile)async{
-          final bool sucess = await GallerySaver.saveImage(pickedFile.path);
+          final File file = File(pickedFile.path);
+          final bool sucess = await GallerySaver.saveImage(file.path);
           if(sucess){
-            final File file = File(pickedFile.path);
             final String base64Image = base64Encode(file.readAsBytesSync());
             final String fileName = file.path.split("/").last;
             photoBeforeScreen.sendImage(
@@ -57,6 +57,7 @@ class AddTileWidget extends StatelessWidget {
             );
           }
         }
+
         return GestureDetector(
           onTap: (){
             Get.bottomSheet(
@@ -69,7 +70,8 @@ class AddTileWidget extends StatelessWidget {
                   children: <Widget>[
                     IconButton(
                       icon: Icon(Icons.photo_camera),
-                      onPressed: ()async{
+                      // ignore: void_checks
+                      onPressed: () async{
 
                         await PermissionHandler().requestPermissions([
                           PermissionGroup.camera,
@@ -103,11 +105,10 @@ class AddTileWidget extends StatelessWidget {
                             return;
                         } else {
                           final picker = ImagePicker();
-
                           final PickedFile pickedFile = 
                           await picker.getImage(source: ImageSource.camera);
                           if(pickedFile == null){
-                            showDialog(
+                            return showDialog(
                               context: context,
                               child: AlertDialog(
                                 content: const Text(
@@ -123,14 +124,8 @@ class AddTileWidget extends StatelessWidget {
                                 ],
                               )
                             );
-                            return;
                           }
-                          final bool sucess = await GallerySaver.saveImage(pickedFile.path);
-                          if(sucess){
-                            photoBeforeScreen.addImage(pickedFile.path);
-                          } else {
-                            //TODO: ARRUMAR AQUI
-                          }
+                          photoBeforeScreen.addImage(pickedFile.path);
                           saveImage(pickedFile);
                         }
                       },
@@ -171,7 +166,6 @@ class AddTileWidget extends StatelessWidget {
                           return;
                         } else {
                           final picker = ImagePicker();
-
                           final PickedFile pickedFile = 
                           await picker.getImage(source: ImageSource.gallery);
                           if(pickedFile == null){
@@ -193,6 +187,7 @@ class AddTileWidget extends StatelessWidget {
                             );
                             return;
                           }
+                          photoBeforeScreen.addImage(pickedFile.path);
                           saveImage(pickedFile);
                         }
                       },
