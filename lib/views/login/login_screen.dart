@@ -178,13 +178,6 @@ class LoginScreen extends StatelessWidget {
                                 },
                                 onSucess: (){
                                   Get.offAllNamed('/base');
-                                  Get.snackbar(
-                                    'Sucesso',
-                                    'Você logou com sucesso',
-                                    colorText: Colors.white,
-                                    backgroundColor: const Color(0xff48c2e7),
-                                    duration: const Duration(seconds: 1)
-                                  );
                                 },
                                 authFail: (erro){
                                   Get.snackbar(

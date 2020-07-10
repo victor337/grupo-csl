@@ -72,7 +72,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
           GetBuilder<UserController>(
             builder: (userController){
               return GestureDetector(
-                onTap: (){
+                onTap: ()async{
+                  await userController.deleteUserLocal();
                   Get.offAllNamed('/login');
                 },
                 child: Container(

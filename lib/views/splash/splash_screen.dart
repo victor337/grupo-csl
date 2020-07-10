@@ -16,62 +16,56 @@ class SplashScreen extends StatelessWidget {
         body: GetBuilder<UserController>(
           init: UserController(),
           builder: (userController){
-            userController.readUserLocal(
-              login: (){
-                Get.offNamed('/login');
-              },
-              base: (user){
-                userController.login(
-                  login: user['login'] as String,
-                  pass: user['pass'] as String,
-                  ordersSucess: (){
-                    Get.snackbar(
-                      'Atualizado',
-                      'Os pedidos foram buscados!',
-                      colorText: Colors.white,
-                      backgroundColor: Colors.green,
-                      duration: const Duration(seconds: 2)
-                    );
-                  },
-                  onError: (e){
-                    Get.snackbar(
-                      'Nada por hoje',
-                      'Não há pedidos para está data',
-                      colorText: Colors.white,
-                      backgroundColor: Colors.grey,
-                      duration: const Duration(seconds: 2)
-                    );
-                  },
-                  onSucess: (){
-                    print('Entrou aqui');
-                    Get.offAllNamed('/base');
-                    Get.snackbar(
-                      'Sucesso',
-                      'Você logou com sucesso',
-                      colorText: Colors.white,
-                      backgroundColor: const Color(0xff48c2e7),
-                      duration: const Duration(seconds: 1)
-                    );
-                  },
-                  authFail: (erro){
-                    Get.snackbar(
-                      'Falha: ${erro.code}',
-                      erro.title,
-                      colorText: Colors.white,
-                      backgroundColor: Colors.red
-                    );
-                  },
-                  onFail: (e){
-                    Get.snackbar(
-                      'Erro', 'Erro desconhecido.',
-                      colorText: Colors.white,
-                      backgroundColor: Colors.red
-                    );
-                  },
-                  remeber: false,
-                );
-              }
-            );
+            Future.delayed(const Duration(seconds: 3)).then((value){
+              userController.readUserLocal(
+                login: (){
+                  Get.offNamed('/login');
+                },
+                base: (user){
+                  userController.login(
+                    login: user['login'] as String,
+                    pass: user['pass'] as String,
+                    ordersSucess: (){
+                      Get.snackbar(
+                        'Atualizado',
+                        'Os pedidos foram buscados!',
+                        colorText: Colors.white,
+                        backgroundColor: Colors.green,
+                        duration: const Duration(seconds: 2)
+                      );
+                    },
+                    onError: (e){
+                      Get.snackbar(
+                        'Nada por hoje',
+                        'Não há pedidos para está data',
+                        colorText: Colors.white,
+                        backgroundColor: Colors.grey,
+                        duration: const Duration(seconds: 2)
+                      );
+                    },
+                    onSucess: (){
+                      Get.offAllNamed('/base');
+                    },
+                    authFail: (erro){
+                      Get.snackbar(
+                        'Falha: ${erro.code}',
+                        erro.title,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red
+                      );
+                    },
+                    onFail: (e){
+                      Get.snackbar(
+                        'Erro', 'Erro desconhecido.',
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red
+                      );
+                    },
+                    remeber: false,
+                  );
+                }
+              );
+            });
             return Container(
               height: sizeScreen.getHeightScreen(context),
               width: sizeScreen.getWidthScreen(context),

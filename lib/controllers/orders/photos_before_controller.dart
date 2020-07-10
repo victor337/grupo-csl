@@ -66,10 +66,10 @@ class PhotoBeforeController extends GetxController {
     } else {
       PickedFile pickedFile;
       if(typePicker == 1){
-        pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 40);
+        pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 20);
         update();
       } else {
-        pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 40);
+        pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
         update();
       }
 

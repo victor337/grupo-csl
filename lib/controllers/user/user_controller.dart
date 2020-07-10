@@ -166,7 +166,9 @@ class UserController extends GetxController {
     }
   }
 
-  
+  Future<void> deleteUserLocal()async{
+    await getStorage.remove('user');
+  }  
 
   Future<void> saveUserLocal(Map<String, dynamic> data)async{
     await getStorage.write('user', data);
@@ -181,13 +183,10 @@ class UserController extends GetxController {
     final Map<String, dynamic> user = await getStorage.read('user');
     if(user == null){
       login();
-      update();
     } else if(user['date'] != dateNow){
       login();
-      update();
     } else {
       base(user);
-      update();
     }
   }
 }
