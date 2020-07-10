@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:grupocsl/model/errors/errors_model.dart';
 import 'package:grupocsl/model/order_service/order_service.dart';
 import 'package:grupocsl/model/user/user_model.dart';
@@ -14,59 +15,13 @@ class UserController extends GetxController {
 
   bool isLoading = false;
 
+  final GetStorage getStorage = GetStorage();
+
   final String urlAuth = '$urlBase/api/autentica.php';
   final String urlList = '$urlBase/api/listaOS.php';
   final String urlStatus = '$urlBase/api/atualizaOS.php';
 
   UserModel user;
-  
-  // final GetStorage box = GetStorage();
-
-  // void saveData(Map<String, dynamic> data){
-  //   final String date = DateTime.now().toString().substring(0, 10);
-  //   box.write('user', {
-  //     "id": data['id'] as String,
-  //     "idAux": data['idAux'] as String,
-  //     "nome": data['nome'] as String,
-  //     "tipo": data['tipo'] as String,
-  //     "idFunc": data['idFunc'] as String,
-  //     "token": data['token'] as String,
-  //     "franquia": data['franquia'] as String,
-  //     "data": date
-  //   });
-  //   final userData = json.encode(data);
-  //   final response = json.decode(userData);
-  //   user = UserModel.fromMap(response as Map<String, dynamic>);
-  //   update();
-  // }
-
-  // void deleteUserData(){
-  //   box.remove('user');
-  //   user = null;
-  // }
-
-  // Future<bool> readToken()async{
-  //   final Map<String, dynamic> userData = await box.read('user');
-  //   print(userData);
-  //   if(userData == null){
-  //     return false;
-  //   }
-  //   else{
-  //     if(userData["data"] == DateTime.now().toString().substring(0, 10)){
-  //       saveData(userData);
-  //       print(user.nome);
-  //       update();
-  //       return true;
-  //     }
-  //     else{
-  //       box.remove('user');
-  //       return false;
-  //     }
-  //   }
-  // }
-
-
-  
 
   Future<void> setStatusOrder({
     @required String token,
@@ -169,7 +124,8 @@ class UserController extends GetxController {
     @required Function(String) onFail,
     @required Function(Error) authFail,
     @required Function(Error) onError,
-    @required Function ordersSucess
+    @required Function ordersSucess,
+    @required bool remeber,
   })async{
 
     isLoading = true;
@@ -181,6 +137,15 @@ class UserController extends GetxController {
       user = UserModel.fromMap(responseData as Map<String, dynamic>);
       if(user.nome != null){
         isLoading = false;
+        if(remeber){
+          final Map<String, dynamic> userData = {
+            'login': login,
+            'pass': pass,
+            'token': user.token,
+            'date': '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+          };
+          saveUserLocal(userData);
+        } 
         findOrders(
           user: user,
           onSucess: ordersSucess,
@@ -201,6 +166,28 @@ class UserController extends GetxController {
     }
   }
 
+  
 
+  Future<void> saveUserLocal(Map<String, dynamic> data)async{
+    await getStorage.write('user', data);
+  }
 
+  Future<void> readUserLocal({
+    @required Function login,
+    @required Function(Map<String, dynamic>) base,
+  })async{
+    final String dateNow = 
+      '${DateTime.now().year.toString()}-${DateTime.now().month.toString()}-${DateTime.now().day.toString()}';
+    final Map<String, dynamic> user = await getStorage.read('user');
+    if(user == null){
+      login();
+      update();
+    } else if(user['date'] != dateNow){
+      login();
+      update();
+    } else {
+      base(user);
+      update();
+    }
+  }
 }

@@ -27,7 +27,7 @@ class AddTileWidget extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.photo_camera),
                       onPressed: () async{
-                        Navigator.of(context).pop();
+                        Get.back(closeOverlays: true);
                         try {
                           await photoBeforeScreen.getImage(
                             context,
@@ -83,7 +83,7 @@ class AddTileWidget extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.photo_album),
                       onPressed: ()async{
-                        Navigator.of(context).pop();
+                        Get.back(closeOverlays: true);
                         await photoBeforeScreen.getImage(
                           context,
                           type: '1',

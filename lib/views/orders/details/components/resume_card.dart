@@ -44,7 +44,6 @@ class ResumeCard extends StatelessWidget {
             ),
             const SizedBox(height: 5,),
             GetBuilder<UserController>(
-              init: UserController(),
               builder: (userController){
                 return Text(
                   'Status: ${setStatus.setStatusAtt(int.parse(userController.orders[index].statusAttendance))}',

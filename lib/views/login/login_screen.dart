@@ -107,7 +107,6 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 GetBuilder<LoginController>(
-                  init: LoginController(),
                   builder: (loginController){
                     return CustomFormField(
                       focusNode: focusPass,
@@ -124,9 +123,28 @@ class LoginScreen extends StatelessWidget {
                     );
                   },
                 ),
+                GetBuilder<LoginController>(
+                  builder: (loginController){
+                    return Row(
+                      children: <Widget>[
+                        Checkbox(
+                          onChanged: (value){
+                            loginController.setRemeber();
+                          },
+                          value: loginController.remeber,
+                        ),
+                        const Text(
+                          'Lembra-me',
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                ),
                 const SizedBox(height: 20,),
                 GetBuilder<LoginController>(
-                  init: LoginController(),
                   builder: (loginController){
                     return GetBuilder<UserController>(
                       init: UserController(),
@@ -182,7 +200,8 @@ class LoginScreen extends StatelessWidget {
                                     colorText: Colors.white,
                                     backgroundColor: Colors.red
                                   );
-                                }
+                                },
+                                remeber: loginController.remeber
                               );
                             } : null,
                             child: userController.isLoading ?

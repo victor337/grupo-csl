@@ -6,13 +6,11 @@ import 'package:grupocsl/views/orders/photos/after/components/add_tile_after_wid
 import 'package:grupocsl/views/orders/photos/after/components/list_after_images.dart';
 
 
-
 class PhotoAfterScreen extends StatefulWidget {
 
-  final String token;
   final String os;
-
-  const PhotoAfterScreen(this.token, this.os);
+  final String token;
+  const PhotoAfterScreen(this.os, this.token);
 
   @override
   _PhotoAfterScreenState createState() => _PhotoAfterScreenState();
@@ -134,9 +132,9 @@ class _PhotoAfterScreenState extends State<PhotoAfterScreen> {
                     itemCount: photoAfterController.images.length + 1,
                     itemBuilder: (ctx, index){
                       if(index < photoAfterController.images.length){
-                        return ListImages(photoAfterController.images[index], index);
+                        return ListImagesAfter(photoAfterController.images[index], index);
                       } else{
-                        return AddTileWidget(widget.os, widget.token);
+                        return AddTileWidgetAfter(widget.os, widget.token,);
                       }
                     },
                     staggeredTileBuilder: (index){
@@ -185,7 +183,7 @@ class _PhotoAfterScreenState extends State<PhotoAfterScreen> {
                     color: Theme.of(context).primaryColor,
                     child: const Text('Ok', style: TextStyle(color: Colors.white,),)
                   ),
-                ]
+                ],
               ),
             ),
           ),

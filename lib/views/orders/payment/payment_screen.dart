@@ -145,8 +145,8 @@ class PaymentScreen extends StatelessWidget {
                                             seconds: 3
                                           )
                                         ).then((value){
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
+                                          Get.back(closeOverlays: true);
+                                          Get.back(closeOverlays: true);
                                         });
                                       },
                                       child: const Text(

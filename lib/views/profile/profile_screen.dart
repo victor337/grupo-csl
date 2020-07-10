@@ -19,7 +19,6 @@ class ProfileScreen extends StatelessWidget {
       ),
       drawer: CustomDrawer(),
       body: GetBuilder<UserController>(
-        init: UserController(),
         builder: (userController){
           return Container(
             padding: const EdgeInsets.fromLTRB(10, 25, 10, 0),

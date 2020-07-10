@@ -89,7 +89,7 @@ class PhotoBeforeController extends GetxController {
               os: os,
               image: base64Image,
               tipo: type,
-              name: '$type - $fileName',
+              name: '$type - $os - $fileName',
               onSucess: onSucess,
               onFail: onFail,
             ).then((_){

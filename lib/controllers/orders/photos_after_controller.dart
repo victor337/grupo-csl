@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:grupocsl/repository/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -89,7 +89,7 @@ class PhotoAfterController extends GetxController {
               os: os,
               image: base64Image,
               tipo: type,
-              name: '$type - $fileName',
+              name: '$type - $os - $fileName',
               onSucess: onSucess,
               onFail: onFail,
             ).then((_){
@@ -139,5 +139,6 @@ class PhotoAfterController extends GetxController {
       update();
     }
   }
+
 
 }

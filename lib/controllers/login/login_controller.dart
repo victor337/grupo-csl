@@ -18,4 +18,10 @@ class LoginController extends GetxController {
   bool get isValid => login != null && login != '' &&
     pass != null && pass != '';
 
+  bool remeber = false;
+  void setRemeber(){
+    remeber = !remeber;
+    update();
+  }
+
 }

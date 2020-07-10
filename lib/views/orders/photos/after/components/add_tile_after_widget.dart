@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:grupocsl/controllers/orders/photos_after_controller.dart';
 
 
-class AddTileWidget extends StatelessWidget {
+class AddTileWidgetAfter extends StatelessWidget {
 
   final String os;
   final String token;
-
-  const AddTileWidget(this.os, this.token,);
+  
+  const AddTileWidgetAfter(this.os, this.token,);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,8 @@ class AddTileWidget extends StatelessWidget {
                   children: <Widget>[
                     IconButton(
                       icon: Icon(Icons.photo_camera),
-                      onPressed: ()async{
+                      onPressed: () async{
+                        Get.back(closeOverlays: true);
                         try {
                           await photoAfterController.getImage(
                             context,
@@ -77,12 +78,12 @@ class AddTileWidget extends StatelessWidget {
                             colorText: Colors.white
                           );
                         }
-                        Navigator.of(context).pop();
                       },
                     ),
                     IconButton(
                       icon: Icon(Icons.photo_album),
                       onPressed: ()async{
+                        Get.back(closeOverlays: true);
                         await photoAfterController.getImage(
                           context,
                           type: '2',
@@ -125,7 +126,6 @@ class AddTileWidget extends StatelessWidget {
                           token: token,
                           os: os
                         );
-                        Navigator.of(context).pop();
                       },
                     ),
                   ],

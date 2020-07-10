@@ -2,19 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grupocsl/controllers/orders/photos_before_controller.dart';
+import 'package:grupocsl/controllers/orders/photos_after_controller.dart';
 
 
-class ListImages extends StatelessWidget {
+class ListImagesAfter extends StatelessWidget {
 
   final File path;
   final int index;
-  const ListImages(this.path, this.index);
+  const ListImagesAfter(this.path, this.index);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PhotoBeforeController>(
-      builder: (photoBeforeController){
+    return GetBuilder<PhotoAfterController>(
+      builder: (photoAfterController){
         return GestureDetector(
           onLongPress: (){
             showDialog(
@@ -33,7 +33,7 @@ class ListImages extends StatelessWidget {
                   ),
                   FlatButton(
                     onPressed: (){
-                      photoBeforeController.removerImage(index);
+                      photoAfterController.removerImage(index);
                       Navigator.of(context).pop();
                     },
                     child: const Text(

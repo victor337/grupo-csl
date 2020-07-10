@@ -8,13 +8,7 @@ import 'package:grupocsl/views/orders/details/details_order_screen.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 
-
-class OrdersScreen extends StatefulWidget {
-  @override
-  _OrdersScreenState createState() => _OrdersScreenState();
-}
-
-class _OrdersScreenState extends State<OrdersScreen> {
+class OrdersScreen extends StatelessWidget {
 
   final SizeScreen sizeScreen = SizeScreen();
 

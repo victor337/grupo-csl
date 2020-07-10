@@ -23,7 +23,6 @@ class ButtonOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<UserController>(
-      init: UserController(),
       builder: (userController){
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
