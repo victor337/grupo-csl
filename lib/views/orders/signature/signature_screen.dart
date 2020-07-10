@@ -154,12 +154,16 @@ class _SignatureScreenState extends State<SignatureScreen> {
                                         actions: <Widget>[
                                           FlatButton(
                                             onPressed: ()async{
-                                              Navigator.of(context).pop();
-                                              await SystemChrome.setPreferredOrientations([
-                                                DeviceOrientation.portraitUp,
-                                                DeviceOrientation.portraitDown,
-                                              ]);
-                                              Navigator.of(context).pop();
+                                              await Future.delayed(const Duration(
+                                                seconds: 3
+                                              )).then((value)async{
+                                                Navigator.of(context).pop();
+                                                await SystemChrome.setPreferredOrientations([
+                                                  DeviceOrientation.portraitUp,
+                                                  DeviceOrientation.portraitDown,
+                                                ]);
+                                                Navigator.of(context).pop();
+                                              });
                                             },
                                             child: const Text('Ok'),
                                           ),

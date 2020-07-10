@@ -140,8 +140,14 @@ class PaymentScreen extends StatelessWidget {
                                   actions: <Widget>[
                                     FlatButton(
                                       onPressed: (){
-                                        Navigator.of(context).pop();
-                                        Navigator.of(context).pop();
+                                        Future.delayed(
+                                          const Duration(
+                                            seconds: 3
+                                          )
+                                        ).then((value){
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                        });
                                       },
                                       child: const Text(
                                         'Ok'

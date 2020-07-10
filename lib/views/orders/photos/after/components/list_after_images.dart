@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grupocsl/controllers/orders/photos_before_controller.dart';
@@ -5,7 +7,7 @@ import 'package:grupocsl/controllers/orders/photos_before_controller.dart';
 
 class ListImages extends StatelessWidget {
 
-  final String path;
+  final File path;
   final int index;
   const ListImages(this.path, this.index);
 
@@ -45,7 +47,7 @@ class ListImages extends StatelessWidget {
               ),
             );
           },
-          child: Image.asset(
+          child: Image.file(
             path,
             fit: BoxFit.cover,
           ),

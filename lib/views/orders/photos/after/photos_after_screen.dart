@@ -7,12 +7,18 @@ import 'package:grupocsl/views/orders/photos/after/components/list_after_images.
 
 
 
-class PhotoAfterScreen extends StatelessWidget {
+class PhotoAfterScreen extends StatefulWidget {
 
   final String token;
   final String os;
 
   const PhotoAfterScreen(this.token, this.os);
+
+  @override
+  _PhotoAfterScreenState createState() => _PhotoAfterScreenState();
+}
+
+class _PhotoAfterScreenState extends State<PhotoAfterScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PhotoAfterController>(
@@ -119,26 +125,67 @@ class PhotoAfterScreen extends StatelessWidget {
                   );
                 }
               },
-              child: StaggeredGridView.countBuilder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                crossAxisCount: 4,
-                itemCount: photoAfterController.images.length + 1,
-                itemBuilder: (ctx, index){
-                  if(index < photoAfterController.images.length){
-                    return ListImages(photoAfterController.images[index], index);
-                  } else{
-                    return AddTileWidget(os, token);
-                  }
-                },
-                staggeredTileBuilder: (index){
-                  return StaggeredTile.count(
-                    2,
-                    index.isEven ? 2 : 1,
-                  );
-                },
-                mainAxisSpacing: 4,
-                crossAxisSpacing: 4,
+              child: ListView(
+                children: <Widget>[
+                  StaggeredGridView.countBuilder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    crossAxisCount: 4,
+                    itemCount: photoAfterController.images.length + 1,
+                    itemBuilder: (ctx, index){
+                      if(index < photoAfterController.images.length){
+                        return ListImages(photoAfterController.images[index], index);
+                      } else{
+                        return AddTileWidget(widget.os, widget.token);
+                      }
+                    },
+                    staggeredTileBuilder: (index){
+                      return StaggeredTile.count(
+                        2,
+                        index.isEven ? 2 : 1,
+                      );
+                    },
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                  ),
+                  const SizedBox(height: 15),
+                  Visibility(
+                    visible: photoAfterController.isLoading,
+                    child: LinearProgressIndicator(
+                      backgroundColor: Colors.grey,
+                    ),
+                  ),
+                  RaisedButton(
+                    onPressed: photoAfterController.images.isEmpty ? null :
+                    (){
+                      Get.dialog(
+                        AlertDialog(
+                          title: const Text('Aviso'),
+                          content: const Text(
+                            'Você não conseguirá alterar essas imagens depois!'
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              onPressed: (){
+                                Get.back();
+                                Get.back();
+                              },
+                              child: const Text('Ok', style: TextStyle(color: Colors.red),),
+                            ),
+                            FlatButton(
+                              onPressed: (){
+                                Get.back();
+                              },
+                              child: const Text('Enviar mais fotos'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    color: Theme.of(context).primaryColor,
+                    child: const Text('Ok', style: TextStyle(color: Colors.white,),)
+                  ),
+                ]
               ),
             ),
           ),
