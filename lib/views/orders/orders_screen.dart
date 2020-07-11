@@ -284,7 +284,7 @@ class OrdersScreen extends StatelessWidget {
                             itemCount: userController.orders.length,
                             itemBuilder: (ctx, index){
                               if(userController.orders[index].dateOrder
-                              == '2020-07-08'
+                              == userController.dateNotFormated.toString().substring(0, 10)
                               ){
                                 return GestureDetector(
                                   onTap: (){

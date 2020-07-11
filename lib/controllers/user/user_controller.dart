@@ -94,7 +94,7 @@ class UserController extends GetxController {
       urlList,
       body: {
         'token': user.token,
-        'data': '2020-07-08'
+        'data': dateNotFormated.toString().substring(0, 10),
       }
     );
     final responseData = json.decode(response.body);
