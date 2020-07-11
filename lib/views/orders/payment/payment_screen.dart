@@ -146,7 +146,7 @@ class PaymentScreen extends StatelessWidget {
                                           )
                                         ).then((value){
                                           Get.back(closeOverlays: true);
-                                          Get.back(closeOverlays: true);
+                                          Get.back();
                                         });
                                       },
                                       child: const Text(

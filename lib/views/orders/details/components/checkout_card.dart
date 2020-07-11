@@ -57,7 +57,7 @@ class CheckoutCard extends StatelessWidget {
                         const SizedBox(width: 10,),
                         Expanded(
                           child: Text(
-                            'Quantidade: ${orderService.services[index].quantity.toString()}',
+                            'Qtd: ${orderService.services[index].quantity.toString()}',
                             textAlign: TextAlign.center,
                           ),
                         ),

@@ -27,7 +27,7 @@ class AddTileWidgetAfter extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.photo_camera),
                       onPressed: () async{
-                        Get.back(closeOverlays: true);
+                        Get.back();
                         try {
                           await photoAfterController.getImage(
                             context,
@@ -83,49 +83,57 @@ class AddTileWidgetAfter extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.photo_album),
                       onPressed: ()async{
-                        Get.back(closeOverlays: true);
-                        await photoAfterController.getImage(
-                          context,
-                          type: '2',
-                          typePicker: 2,
-                          onSucess: (){
-                            Get.snackbar(
-                              'Sucesso', 'Foto enviada',
-                              backgroundColor: Colors.green,
-                              colorText: Colors.white
-                            );
-                          },
-                          onFail: (e){
-                            Get.snackbar(
-                              'Falha', e,
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white
-                            );
-                          },
-                          onFailPermission: (e){
-                            Get.snackbar(
-                              'Falha', 'Você precisa permirtir para enviar as fotos',
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white
-                            );
-                          },
-                          failSaveImage: (){
-                            Get.snackbar(
-                              'Falha', 'Falha ao salvar imagem',
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white
-                            );
-                          },
-                          imageNull: (){
-                            Get.snackbar(
-                              'Falha', 'Nenhuma imagem selecionada',
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white
-                            );
-                          },
-                          token: token,
-                          os: os
-                        );
+                        Get.back();
+                        try {
+                          await photoAfterController.getImage(
+                            context,
+                            type: '2',
+                            typePicker: 2,
+                            onSucess: (){
+                              Get.snackbar(
+                                'Sucesso', 'Foto enviada',
+                                backgroundColor: Colors.green,
+                                colorText: Colors.white
+                              );
+                            },
+                            onFail: (e){
+                              Get.snackbar(
+                                'Falha', e,
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white
+                              );
+                            },
+                            onFailPermission: (e){
+                              Get.snackbar(
+                                'Falha', 'Você precisa permirtir para enviar as fotos',
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white
+                              );
+                            },
+                            failSaveImage: (){
+                              Get.snackbar(
+                                'Falha', 'Falha ao salvar imagem',
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white
+                              );
+                            },
+                            imageNull: (){
+                              Get.snackbar(
+                                'Falha', 'Nenhuma imagem selecionada',
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white
+                              );
+                            },
+                            token: token,
+                            os: os
+                          );
+                        } catch (e) {
+                          Get.snackbar(
+                            'Falha', 'Um erro desconhecido aconteceu',
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white
+                          );
+                        }
                       },
                     ),
                   ],

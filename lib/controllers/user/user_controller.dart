@@ -32,6 +32,8 @@ class UserController extends GetxController {
     @required Function onSucess,
     @required Function onOrders,
   })async{
+    textIsLoading = true;
+    update();
     final response = await http.post(
       urlStatus,
       body: {
@@ -44,9 +46,11 @@ class UserController extends GetxController {
     if(!responseData.toString().contains("errors")){
       setOrderStatusInList(index, responseData[0]['statusAtendimento'] as String);
       onSucess();
+      textIsLoading = false;
       update();
     } else{
       onFail(Error.fromMap(responseData as Map<String, dynamic>));
+      textIsLoading = false;
       update();
     }
   }
@@ -69,6 +73,8 @@ class UserController extends GetxController {
     ordersFilter.addAll(orders.where((e) => e.id.contains(filter)));
     update();
   }
+
+  bool textIsLoading = false;
 
   void setOrderStatusInList(int index, String seStatus){
     orders[index].statusAttendance = seStatus;
@@ -188,5 +194,5 @@ class UserController extends GetxController {
     } else {
       base(user);
     }
-  }
+  }  
 }

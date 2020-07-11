@@ -28,11 +28,17 @@ class ButtonStatus extends StatelessWidget {
             onAction();
             onPressed();
           },
-          child: Text(
-            setStatusFunc.setStatusAtt(setStatus+1),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+            child: userController.textIsLoading ? const Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              )) : Text(
+              setStatusFunc.setStatusAtt(setStatus+1),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
             ),
           ),
         );

@@ -159,7 +159,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
                                                 DeviceOrientation.portraitUp,
                                                 DeviceOrientation.portraitDown,
                                               ]);
-                                              Get.back(closeOverlays: true);
+                                              Get.back();
                                             },
                                             child: const Text('Ok'),
                                           ),
