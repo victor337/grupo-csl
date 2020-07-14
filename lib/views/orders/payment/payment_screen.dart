@@ -1,3 +1,4 @@
+import 'package:brasil_fields/formatter/real_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -239,9 +240,12 @@ class PaymentScreen extends StatelessWidget {
                                           onFieldSubmitted: (v){
                                             valueFocus.unfocus();
                                           },
-                                          keyboardType: TextInputType.number,
+                                          keyboardType: const TextInputType.numberWithOptions(
+                                            decimal: true
+                                          ),
                                           inputFormatters: [
                                             WhitelistingTextInputFormatter.digitsOnly,
+                                            RealInputFormatter(centavos: true),
                                           ],
                                           style: const TextStyle(
                                             color: Colors.white
@@ -356,6 +360,12 @@ class PaymentScreen extends StatelessWidget {
                                     color: const Color(0xff48c2e7),
                                     onPressed: paymentController.isValid ? (){
                                       paymentController.sendPayment(
+                                        valueParam: paymentController.value.toString().replaceAll('.', '').replaceAll(',', '.'),
+                                        dataParam: paymentController.dateNotFormated.toString().substring(0, 10),
+                                        form: paymentController.setTypePayment(paymentController.optionSelect),
+                                        type: paymentController.setTypePayment(
+                                          paymentController.optionSelect
+                                        ),
                                         token: userController.user.token,
                                         os: orderService.id,
                                         idPay: paymentController.snapshot['pagamentos']['idPagamento'] as String,
@@ -376,17 +386,15 @@ class PaymentScreen extends StatelessWidget {
                                             e,
                                             Colors.red
                                           );
-                                          Future.delayed(const Duration(
-                                            seconds: 3)).then((value){
-                                              Navigator.of(context).pop();
-                                          });
                                         }
                                       );
                                     } : null,
                                     child: Container(
                                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                                       child: paymentController.isLoading ? const Center(
-                                        child: CircularProgressIndicator(),
+                                        child: CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                                        ),
                                       ) : Text(
                                         'Enviar',
                                         textAlign: TextAlign.center,
@@ -580,9 +588,12 @@ class PaymentScreen extends StatelessWidget {
                                           onFieldSubmitted: (v){
                                             valueFocus.unfocus();
                                           },
-                                          keyboardType: TextInputType.number,
+                                          keyboardType: const TextInputType.numberWithOptions(
+                                            decimal: true
+                                          ),
                                           inputFormatters: [
                                             WhitelistingTextInputFormatter.digitsOnly,
+                                            RealInputFormatter(centavos: true),
                                           ],
                                           style: const TextStyle(
                                             color: Colors.white
@@ -697,6 +708,12 @@ class PaymentScreen extends StatelessWidget {
                                     color: const Color(0xff48c2e7),
                                     onPressed: paymentController.isValid ? (){
                                       paymentController.sendPayment(
+                                        valueParam: paymentController.value,
+                                        dataParam: paymentController.dateNotFormated.toString().substring(0, 10),
+                                        form: paymentController.setTypePayment(paymentController.optionSelect),
+                                        type: paymentController.setTypePayment(
+                                          paymentController.optionSelect
+                                        ),
                                         token: userController.user.token,
                                         os: orderService.id,
                                         idPay: snapshot.data[0]['pagamentos']['idPagamento'] as String,
@@ -717,17 +734,15 @@ class PaymentScreen extends StatelessWidget {
                                             e,
                                             Colors.red
                                           );
-                                          Future.delayed(const Duration(
-                                            seconds: 3)).then((value){
-                                              Navigator.of(context).pop();
-                                          });
                                         }
                                       );
                                     } : null,
                                     child: Container(
                                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                                       child: paymentController.isLoading ? const Center(
-                                        child: CircularProgressIndicator(),
+                                        child: CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                                        ),
                                       ) : Text(
                                         'Enviar',
                                         textAlign: TextAlign.center,

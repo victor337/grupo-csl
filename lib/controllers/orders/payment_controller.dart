@@ -20,6 +20,7 @@ class PaymentController extends GetxController {
   }
   
   void setValue(String setValue){
+    setValue.replaceAll('.', '').replaceAll(',', '.');
     value = setValue;
     update();
   }
@@ -50,9 +51,9 @@ class PaymentController extends GetxController {
       return '2';
     } else if(type == 'Dinheiro'){
       return '3';
-    } else if(type == 'Transferência'){
+    } else if(type == 'Tranferência'){
       return '4';
-    } else if(type == 'Cartão de Crédito'){
+    } else if(type == 'Cartão de Crédito 2x'){
       return '5';
     } else if(type == 'Cartão de Crédito 3x'){
       return '6';
@@ -89,8 +90,13 @@ class PaymentController extends GetxController {
     @required String os,
     @required String idPay,
     @required Function onSucess,
-    @required Function(String) onFail
+    @required Function(String) onFail,
+    @required String type,
+    @required String dataParam,
+    @required String valueParam,
+    @required String form,
   })async{
+    
 
     isLoading = true;
     update();
@@ -100,11 +106,11 @@ class PaymentController extends GetxController {
       body: {
         'token': token,
         'os': os,
-        'dataPagamento': dateNotFormated.toString().substring(0, 10),
         'idPagamento': idPay,
-        'valor': value,
+        'dataPagamento': dataParam,
+        'valor': valueParam,
         'tipoPagamento': '1',
-        'formaPagamento': setTypePayment(optionSelect),
+        'formaPagamento': form
       }
     );
 

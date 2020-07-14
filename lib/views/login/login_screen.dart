@@ -113,12 +113,13 @@ class LoginScreen extends StatelessWidget {
                       onChanged: (pass){
                         loginController.setPass(pass);
                       },
+                      obscure: true,
                       hintText: 'Sua senha',
                       onFieldSubmitted: (text){
                         focusPass.unfocus();
                       },
                       textInputAction: TextInputAction.done,
-                      keyBoardType: TextInputType.emailAddress,
+                      keyBoardType: TextInputType.visiblePassword,
                       iconData: Icons.lock
                     );
                   },

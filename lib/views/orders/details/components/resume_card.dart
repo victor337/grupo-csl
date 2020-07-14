@@ -22,7 +22,7 @@ class ResumeCard extends StatelessWidget {
       } else if(nume == '1'){
         return 'Paga';
       } else{
-        return 'Nulo, confirme com um superior';
+        return 'Em aberto';
       }
     }
 

@@ -31,6 +31,10 @@ class CheckoutCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
+              'Descrição: ${orderService.descripton??''}',
+            ),
+            const SizedBox(height: 5,),
+            Text(
               'Observação: ${orderService.observation??''}',
             ),
             const SizedBox(height: 5,),

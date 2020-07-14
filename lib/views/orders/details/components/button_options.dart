@@ -125,7 +125,7 @@ class ButtonOptions extends StatelessWidget {
                             AlertDialog(
                               title: const Text('Aviso'),
                               content: const Text(
-                                'Está OS já está fechada, não é possívvel fazxer alterações'
+                                'OS já fechada, não é possível fazer alterações!'
                               ),
                               actions: <Widget>[
                                 FlatButton(
